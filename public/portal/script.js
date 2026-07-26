@@ -164,7 +164,7 @@
     localStorage.setItem(QKEY, JSON.stringify(all.slice(-30)));
   }
 
-  // AI question generation (falls back to the offline bank if the service is unavailable)
+  // Dynamic Question Generation (falls back to the offline bank if the service is unavailable)
   function generateQuestions(category, level, count) {
     return fetch("/api/public/questions", {
       method: "POST",
@@ -292,11 +292,11 @@
       generating = true;
       document.querySelectorAll(".level").forEach(function (x) { x.disabled = true; });
       hint.style.color = "var(--muted)";
-      hint.textContent = "✨ Generating fresh " + level + " " + category + " questions…";
+      hint.textContent = "Preparing your " + level + " " + category + " question set…";
       generateQuestions(category, level, count)
         .catch(function (err) {
           hint.style.color = "var(--warn)";
-          hint.textContent = err.message + " — using offline question bank.";
+          hint.textContent = err.message + " — using the offline question bank.";
           return BANK[level].slice(0, count);
         })
         .then(function (qs) {
