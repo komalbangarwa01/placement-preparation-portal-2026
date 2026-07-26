@@ -112,11 +112,32 @@
     <!-- level picker -->
     <div id="testIntro">
       <div class="page-head"><h2>Aptitude Test</h2></div>
-      <p class="lede">10 multiple-choice questions · 30 minute timer · instant scoring with explanations. Pick a difficulty to begin.</p>
-      <div class="levels">
-        <button class="card level" data-level="Easy"><h3>🟢 Easy</h3><p>Fundamentals: percentages, averages, simple reasoning.</p><span class="btn primary sm">Start Easy</span></button>
-        <button class="card level" data-level="Medium"><h3>🟠 Medium</h3><p>Time &amp; work, probability, data interpretation.</p><span class="btn primary sm">Start Medium</span></button>
-        <button class="card level" data-level="Hard"><h3>🔴 Hard</h3><p>Advanced permutations, ages, tricky series.</p><span class="btn primary sm">Start Hard</span></button>
+      <p class="lede">Fresh AI-generated questions every attempt · 30 minute timer · instant scoring with detailed explanations. Choose a category and difficulty to begin.</p>
+
+      <div class="card setup">
+        <label>Category
+          <select id="catSelect">
+            <option>Logical Reasoning</option>
+            <option>Verbal Reasoning</option>
+            <option>Quantitative Aptitude</option>
+            <option>Data Interpretation</option>
+            <option>Puzzles &amp; Seating Arrangement</option>
+            <option>Coding-Decoding</option>
+            <option>Blood Relations</option>
+            <option>Series &amp; Patterns</option>
+          </select>
+        </label>
+        <label>Number of questions
+          <select id="countSelect">
+            <option>5</option><option selected>8</option><option>10</option>
+          </select>
+        </label>
+        <div class="levels">
+          <button class="card level" data-level="Easy"><h3>🟢 Easy</h3><p>Single-step questions to warm up.</p><span class="btn primary sm">Start Easy</span></button>
+          <button class="card level" data-level="Medium"><h3>🟠 Medium</h3><p>Two-step reasoning, exam pace.</p><span class="btn primary sm">Start Medium</span></button>
+          <button class="card level" data-level="Hard"><h3>🔴 Hard</h3><p>Multi-step questions with traps.</p><span class="btn primary sm">Start Hard</span></button>
+        </div>
+        <p class="hint" id="genHint"></p>
       </div>
     </div>
 
@@ -146,6 +167,7 @@
         <div class="card stat"><span>Score</span><strong id="resScore">0/10</strong></div>
         <div class="card stat"><span>Percentage</span><strong id="resPct">0%</strong></div>
         <div class="card stat"><span>Level</span><strong id="resLevel">—</strong></div>
+        <div class="card stat"><span>Category</span><strong id="resCat">—</strong></div>
         <div class="card stat"><span>Time Taken</span><strong id="resTime">—</strong></div>
       </div>
       <h3 class="review-title">Answer explanations</h3>

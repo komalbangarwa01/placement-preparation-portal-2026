@@ -154,19 +154,46 @@
     ]
   };
 
-  var quiz = null, tick = null;
+  var QKEY = "prepdeck.generated";
+  var quiz = null, tick = null, generating = false;
 
-  function startQuiz(level) {
+  function saveGenerated(entry) {
+    var all = [];
+    try { all = JSON.parse(localStorage.getItem(QKEY)) || []; } catch (e) { all = []; }
+    all.push(entry);
+    localStorage.setItem(QKEY, JSON.stringify(all.slice(-30)));
+  }
+
+  // AI question generation (falls back to the offline bank if the service is unavailable)
+  function generateQuestions(category, level, count) {
+    return fetch("/api/public/questions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ category: category, difficulty: level, count: count })
+    }).then(function (r) {
+      return r.json().then(function (d) {
+        if (!r.ok) throw new Error(d.error || "Generation failed");
+        return d.questions;
+      });
+    }).then(function (qs) {
+      var mapped = qs.map(function (q) { return [q.question, q.options, q.answerIndex, q.explanation]; });
+      saveGenerated({ category: category, level: level, date: Date.now(), questions: mapped });
+      return mapped;
+    });
+  }
+
+  function startQuiz(level, category, qs) {
     quiz = {
       level: level,
-      qs: BANK[level],
-      answers: new Array(BANK[level].length).fill(null),
+      category: category,
+      qs: qs,
+      answers: new Array(qs.length).fill(null),
       i: 0,
       left: 30 * 60,
       startedAt: Date.now()
     };
     $("testIntro").hidden = true; $("testResult").hidden = true; $("testRun").hidden = false;
-    $("quizLevel").textContent = level + " Aptitude Test";
+    $("quizLevel").textContent = category + " · " + level;
     drawQ();
     clearInterval(tick);
     updateTimer();
@@ -222,9 +249,9 @@
     // persist to the same store the dashboard reads -> dashboard updates automatically
     var list = load();
     list.push({
-      topic: "Aptitude Test (" + quiz.level + ")",
+      topic: quiz.category + " (" + quiz.level + ")",
       score: score, total: total, date: Date.now(),
-      level: quiz.level, seconds: secs, source: "quiz"
+      level: quiz.level, category: quiz.category, seconds: secs, source: "quiz"
     });
     save(list);
     render();
@@ -232,6 +259,7 @@
     $("resScore").textContent = score + "/" + total;
     $("resPct").textContent = Math.round((score / total) * 100) + "%";
     $("resLevel").textContent = quiz.level;
+    $("resCat").textContent = quiz.category;
     $("resTime").textContent = Math.floor(secs / 60) + "m " + (secs % 60) + "s";
 
     var rl = $("reviewList"); rl.innerHTML = "";
@@ -255,7 +283,29 @@
   }
 
   document.querySelectorAll(".level").forEach(function (b) {
-    b.addEventListener("click", function () { startQuiz(b.dataset.level); });
+    b.addEventListener("click", function () {
+      if (generating) return;
+      var level = b.dataset.level;
+      var category = $("catSelect").value;
+      var count = Number($("countSelect").value);
+      var hint = $("genHint");
+      generating = true;
+      document.querySelectorAll(".level").forEach(function (x) { x.disabled = true; });
+      hint.style.color = "var(--muted)";
+      hint.textContent = "✨ Generating fresh " + level + " " + category + " questions…";
+      generateQuestions(category, level, count)
+        .catch(function (err) {
+          hint.style.color = "var(--warn)";
+          hint.textContent = err.message + " — using offline question bank.";
+          return BANK[level].slice(0, count);
+        })
+        .then(function (qs) {
+          generating = false;
+          document.querySelectorAll(".level").forEach(function (x) { x.disabled = false; });
+          setTimeout(function () { hint.textContent = ""; }, 2500);
+          startQuiz(level, category, qs);
+        });
+    });
   });
   $("prevBtn").addEventListener("click", function () { if (quiz && quiz.i > 0) { quiz.i--; drawQ(); } });
   $("nextBtn").addEventListener("click", function () { if (quiz && quiz.i < quiz.qs.length - 1) { quiz.i++; drawQ(); } });
