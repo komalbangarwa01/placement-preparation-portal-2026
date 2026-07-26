@@ -51,6 +51,12 @@
     "Karthik", "Nisha", "Aditya", "Pooja", "Manish", "Farah", "Imran", "Lakshmi", "Nikhil", "Tanvi"];
   var WORDS = ["LOGIC", "BRAIN", "PAPER", "MOUSE", "TIGER", "PLANT", "CHAIR", "STONE", "CLOUD", "TRAIN",
     "GRAPE", "HOUSE", "LIGHT", "MONEY", "NURSE", "OCEAN", "PRIZE", "QUEEN", "RIVER", "SNAKE"];
+  function sing(w) {
+    if (/ists$/.test(w) || /ers$/.test(w) || /ants$/.test(w)) return w.slice(0, -1);
+    if (/ies$/.test(w)) return w.slice(0, -3) + "y";
+    if (/es$/.test(w) && /(ch|sh|s|x|z)es$/.test(w)) return w.slice(0, -2);
+    return w.replace(/s$/, "");
+  }
   var GROUPS = ["engineers", "students", "doctors", "artists", "singers", "lawyers", "farmers", "pilots",
     "teachers", "cricketers", "authors", "chemists", "dancers", "nurses", "traders"];
 
@@ -192,8 +198,8 @@
    * 4. Blood Relations                                                  *
    * ------------------------------------------------------------------ */
   function bloodRelations(level, i, rand) {
-    var m = pick(rand, NAMES), f = pick(rand, NAMES);
-    if (f === m) f = NAMES[(NAMES.indexOf(m) + 5) % NAMES.length];
+    var m = NAMES[i % NAMES.length], f = NAMES[(i * 3 + 7) % NAMES.length];
+    if (f === m) f = NAMES[(i * 3 + 8) % NAMES.length];
     var question, ans, wrong, exp;
     if (level === "Easy") {
       var t = i % 3;
@@ -295,9 +301,10 @@
    * 7. Syllogism                                                        *
    * ------------------------------------------------------------------ */
   function syllogism(level, i, rand) {
-    var x = pick(rand, GROUPS), y = pick(rand, GROUPS), z = pick(rand, GROUPS);
+    var x = GROUPS[i % GROUPS.length], y = GROUPS[(i * 2 + 3) % GROUPS.length], z = GROUPS[(i * 3 + 7) % GROUPS.length];
     if (y === x) y = GROUPS[(GROUPS.indexOf(x) + 4) % GROUPS.length];
     if (z === x || z === y) z = GROUPS[(GROUPS.indexOf(y) + 5) % GROUPS.length];
+    var xs = sing(x), ys = sing(y), zs = sing(z);
     var question, ans, wrong, exp;
     if (level === "Easy") {
       question = "Statements: All " + x + " are " + y + ". All " + y + " are " + z + ".\nConclusion: All " + x + " are " + z + ".\nDoes the conclusion follow?";
@@ -403,14 +410,16 @@
   ];
   function statementConclusion(level, i, rand) {
     var base = SC[i % SC.length];
+    var ctx = ["At Sunrise Institute of Technology", "At the district training centre", "At Nova Engineering College",
+      "At the campus placement cell", "At Horizon Skills Academy"][Math.floor(i / SC.length) % 5];
     var follows = base[2];
-    var question = "Statement: " + base[0] + "\nConclusion: " + base[1] + "\nDecide whether the conclusion logically follows.";
+    var question = "Statement: " + ctx + ", " + base[0].charAt(0).toLowerCase() + base[0].slice(1) + "\nConclusion: " + base[1] + "\nDecide whether the conclusion logically follows.";
     var ans = follows ? "The conclusion follows" : "The conclusion does not follow";
     var wrong = follows
       ? ["The conclusion does not follow", "The conclusion is contradicted", "Data is insufficient"]
       : ["The conclusion follows", "The conclusion is implied", "Both are equally valid"];
     if (level === "Hard") {
-      question = "Statement: " + base[0] + "\nConclusion I: " + base[1] + "\nConclusion II: " + SC[(i + 3) % SC.length][1] +
+      question = "Statement: " + ctx + ", " + base[0].charAt(0).toLowerCase() + base[0].slice(1) + "\nConclusion I: " + base[1] + "\nConclusion II: " + SC[(i + 3) % SC.length][1] +
         "\nWhich of the conclusions follows from the statement?";
       var secondFollows = false;
       ans = follows ? "Only Conclusion I follows" : "Neither conclusion follows";
