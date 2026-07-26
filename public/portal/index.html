@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PrepDeck — Placement Preparation Portal</title>
+<meta name="description" content="Track placement test scores, strong and weak topics, and recent practice activity in one modern dashboard." />
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="#home"><span class="dot"></span>PrepDeck</a>
+  <button class="burger" id="burger" aria-label="Toggle menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="#home" class="nav-link active" data-page="home">Home</a>
+    <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
+    <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
+    <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</nav>
+
+<main>
+  <!-- LANDING -->
+  <section id="page-home" class="page active">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Placement season, handled</p>
+        <h1>Prepare smarter.<br /><span>Get placed faster.</span></h1>
+        <p class="lede">Log every aptitude, coding and interview mock test. PrepDeck turns your attempts into strong-topic wins and weak-topic hit lists — all stored right in your browser.</p>
+        <div class="cta-row">
+          <a href="#dashboard" class="btn primary" data-page="dashboard">Open Dashboard</a>
+          <a href="#practice" class="btn ghost" data-page="practice">Log a Test</a>
+        </div>
+      </div>
+      <div class="hero-card float">
+        <div class="hc-row"><span>Readiness</span><strong id="heroScore">—</strong></div>
+        <div class="bar"><i id="heroBar"></i></div>
+        <ul class="hc-list">
+          <li>Aptitude <b>+</b></li>
+          <li>DSA <b>+</b></li>
+          <li>DBMS <b>+</b></li>
+        </ul>
+      </div>
+    </header>
+
+    <section class="features">
+      <article class="card"><h3>📊 Live analytics</h3><p>Averages, attempts and trends recalculated on every save.</p></article>
+      <article class="card"><h3>🎯 Topic radar</h3><p>Automatic strong vs weak topic split from your own scores.</p></article>
+      <article class="card"><h3>🕒 Activity feed</h3><p>Your last attempts, always one scroll away.</p></article>
+      <article class="card"><h3>🔒 Local first</h3><p>Everything lives in Local Storage. No accounts, no servers.</p></article>
+    </section>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="page-dashboard" class="page">
+    <div class="page-head">
+      <h2>Dashboard</h2>
+      <button class="btn ghost sm" id="resetBtn">Reset data</button>
+    </div>
+
+    <div class="stats">
+      <div class="card stat"><span>Total Tests Attempted</span><strong id="statTotal">0</strong></div>
+      <div class="card stat"><span>Average Score</span><strong id="statAvg">0%</strong></div>
+      <div class="card stat"><span>Best Score</span><strong id="statBest">0%</strong></div>
+      <div class="card stat"><span>Topics Covered</span><strong id="statTopics">0</strong></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Strong Topics <small>≥ 70%</small></h3>
+        <ul class="topics" id="strongList"></ul>
+      </div>
+      <div class="card">
+        <h3>Weak Topics <small>&lt; 70%</small></h3>
+        <ul class="topics weak" id="weakList"></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Recent Activity</h3>
+      <ul class="activity" id="activityList"></ul>
+    </div>
+  </section>
+
+  <!-- LOG TEST -->
+  <section id="page-practice" class="page">
+    <div class="page-head"><h2>Log a Test</h2></div>
+    <form class="card form" id="testForm">
+      <label>Topic
+        <input name="topic" list="topicList" placeholder="e.g. Quantitative Aptitude" required />
+        <datalist id="topicList">
+          <option>Quantitative Aptitude</option><option>Logical Reasoning</option>
+          <option>Verbal Ability</option><option>Data Structures</option>
+          <option>Algorithms</option><option>DBMS</option><option>Operating Systems</option>
+          <option>Computer Networks</option><option>OOPs</option><option>HR Interview</option>
+        </datalist>
+      </label>
+      <label>Score
+        <input name="score" type="number" min="0" required placeholder="42" />
+      </label>
+      <label>Out of
+        <input name="total" type="number" min="1" value="50" required />
+      </label>
+      <button class="btn primary" type="submit">Save attempt</button>
+      <p class="hint" id="formHint"></p>
+    </form>
+  </section>
+</main>
+
+<footer class="foot">Built for placement season · data stored locally</footer>
+<script src="./script.js"></script>
+</body>
+</html>
