@@ -14,6 +14,7 @@
   <div class="nav-links" id="navLinks">
     <a href="#home" class="nav-link active" data-page="home">Home</a>
     <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
+    <a href="#reason" class="nav-link" data-page="reason">Reasoning Practice</a>
     <a href="#test" class="nav-link" data-page="test">Aptitude Test</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
@@ -30,7 +31,7 @@
         <p class="lede">Record every aptitude, coding and interview mock test. PrepDeck converts your attempts into measurable strengths and a focused list of improvement areas, with all records stored securely on your device.</p>
         <div class="cta-row">
           <a href="#dashboard" class="btn primary" data-page="dashboard">Open Dashboard</a>
-          <a href="#test" class="btn ghost" data-page="test">Take Aptitude Test</a>
+          <a href="#reason" class="btn ghost" data-page="reason">Start Reasoning Practice</a>
         </div>
       </div>
       <div class="hero-card float">
@@ -50,6 +51,125 @@
       <article class="card"><h3>🕒 Activity Tracking</h3><p>A chronological record of your most recent test attempts.</p></article>
       <article class="card"><h3>🔒 Private by design</h3><p>All progress data is stored locally — no accounts and no external servers required.</p></article>
     </section>
+  </section>
+
+  <!-- REASONING PRACTICE -->
+  <section id="page-reason" class="page">
+    <div class="page-head">
+      <h2>Reasoning Practice</h2>
+      <span class="pill">Question bank: <b id="rBankCount">0</b> questions · 10 categories</span>
+    </div>
+
+    <div class="tabs">
+      <button class="rtab active" data-pane="practice">Practice</button>
+      <button class="rtab" data-pane="analytics">Analytics</button>
+      <button class="rtab" data-pane="bookmarks">Bookmarks</button>
+    </div>
+
+    <!-- PRACTICE PANE -->
+    <div id="rPane-practice">
+      <div id="rSetup">
+        <div class="card setup">
+          <h3>Configure your practice set</h3>
+          <div class="modes">
+            <label class="mode"><input type="radio" name="rmode" value="category" checked /><span><b>Category-wise</b><small>One topic in depth</small></span></label>
+            <label class="mode"><input type="radio" name="rmode" value="difficulty" /><span><b>Difficulty-wise</b><small>One level, all topics</small></span></label>
+            <label class="mode"><input type="radio" name="rmode" value="mixed" /><span><b>Mixed practice</b><small>Full-bank simulation</small></span></label>
+          </div>
+          <p class="hint" id="rModeNote"></p>
+          <div class="setup-row">
+            <label>Category
+              <select id="rCategory"></select>
+            </label>
+            <label>Difficulty
+              <select id="rLevel">
+                <option>Easy</option><option selected>Medium</option><option>Hard</option><option>Mixed</option>
+              </select>
+            </label>
+            <label>Questions
+              <select id="rCount">
+                <option>10</option><option selected>15</option><option>20</option><option>30</option>
+              </select>
+            </label>
+          </div>
+          <div class="cta-row">
+            <button class="btn primary" id="rStart">Start practice</button>
+            <button class="btn ghost" id="rStartWeak">Practise weakest topic</button>
+            <button class="btn ghost" id="rStartIncorrect">Review incorrect questions</button>
+            <button class="btn ghost" id="rStartBookmarks">Practise bookmarks</button>
+          </div>
+          <p class="hint" id="rHint"></p>
+        </div>
+
+        <div class="card advice"><h3>Recommended next step</h3><p id="rAdvice"></p></div>
+      </div>
+
+      <!-- RUNNING SESSION -->
+      <div id="rRun" hidden>
+        <div class="quiz-top">
+          <div class="min-w">
+            <h3 id="rSessionLabel">Practice session</h3>
+            <small id="rProgress">Question 1</small>
+          </div>
+          <div class="session-tools">
+            <span class="tag" id="rMeta"></span>
+            <button class="btn ghost sm" id="rBookmark">☆ Bookmark</button>
+            <button class="btn ghost sm" id="rQuit">End session</button>
+          </div>
+        </div>
+        <div class="bar slim"><i id="rBar"></i></div>
+        <div class="card quiz-card">
+          <p class="qtext" id="rQText"></p>
+          <div class="options" id="rOptions"></div>
+          <div class="explain" id="rExplain" hidden></div>
+        </div>
+        <div class="quiz-actions end">
+          <small id="rQTimer">Time on this question: 0s</small>
+          <button class="btn primary" id="rNext" disabled>Next question →</button>
+        </div>
+      </div>
+
+      <!-- SESSION SUMMARY -->
+      <div id="rSummary" hidden>
+        <div class="page-head"><h3>Session summary</h3><button class="btn ghost sm" id="rAgain">New practice set</button></div>
+        <div class="stats">
+          <div class="card stat"><span>Accuracy</span><strong id="rSumAcc">0%</strong></div>
+          <div class="card stat"><span>Correct</span><strong id="rSumScore">0/0</strong></div>
+          <div class="card stat"><span>Incorrect</span><strong id="rSumWrong">0</strong></div>
+          <div class="card stat"><span>Total time</span><strong id="rSumTime">—</strong></div>
+          <div class="card stat"><span>Avg / question</span><strong id="rSumAvg">—</strong></div>
+        </div>
+        <h3 class="review-title">Incorrect questions</h3>
+        <div id="rReviewList" class="review"></div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS PANE -->
+    <div id="rPane-analytics" hidden>
+      <div class="page-head"><h3>Performance analytics</h3><button class="btn ghost sm" id="rResetStats">Clear reasoning data</button></div>
+      <div class="stats">
+        <div class="card stat"><span>Questions Attempted</span><strong id="rTotal">0</strong></div>
+        <div class="card stat"><span>Correct Answers</span><strong id="rCorrect">0</strong></div>
+        <div class="card stat"><span>Incorrect Answers</span><strong id="rIncorrect">0</strong></div>
+        <div class="card stat"><span>Accuracy</span><strong id="rAccuracy">0%</strong></div>
+        <div class="card stat"><span>Daily Streak</span><strong id="rStreak">0 days</strong></div>
+        <div class="card stat"><span>Avg Time / Question</span><strong id="rAvgTime">0s</strong></div>
+      </div>
+      <div class="card">
+        <h3>Weekly progress report <small id="rWeekTotal"></small></h3>
+        <div class="week" id="rWeek"></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><h3>Strong Topics <small>≥ 70% accuracy</small></h3><ul class="topics" id="rStrong"></ul></div>
+        <div class="card"><h3>Weak Topics <small>&lt; 70% accuracy</small></h3><ul class="topics weak" id="rWeak"></ul></div>
+      </div>
+    </div>
+
+    <!-- BOOKMARKS PANE -->
+    <div id="rPane-bookmarks" hidden>
+      <div class="page-head"><h3>Bookmarked questions <small>(<span id="rBookmarkCount">0</span>)</small></h3></div>
+      <div id="rBookmarkList" class="review"></div>
+    </div>
   </section>
 
   <!-- DASHBOARD -->
@@ -177,6 +297,8 @@
 </main>
 
 <footer class="foot">Built for placement season · data stored locally</footer>
+<script src="./reasoning-bank.js"></script>
 <script src="./script.js"></script>
+<script src="./reasoning.js"></script>
 </body>
 </html>
