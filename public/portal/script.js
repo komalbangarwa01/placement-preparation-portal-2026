@@ -150,7 +150,7 @@
       ["Probability of at least one head in 3 coin tosses:", ["5/8", "3/4", "7/8", "1/2"], 2, "1 − (1/2)³ = 7/8."],
       ["Man sells two items at ₹1200 each, one at 20% gain and one at 20% loss. Net:", ["No profit/loss", "₹100 loss", "₹100 gain", "₹50 loss"], 1, "CP = 1000 + 1500 = 2500 vs SP 2400 → ₹100 loss."],
       ["A alone: 20 days, works 5 days, B finishes rest in 9 days. B alone needs:", ["10", "12", "14", "15"], 1, "Remaining 3/4 in 9 days → full job 12 days."],
-      ["Sum of first 30 natural numbers divisible by 3:", ["1395", "1440", "1485", "1530"], 2, "3(1+…+30) = 3 × 465 = 1395… wait: 3 × 495 = 1485 using n=30 sum 465? Correct: numbers 3..90, sum = 30/2 × (3 + 90) = 1395 + 90 = 1485."]
+      ["Sum of the first 30 multiples of 3 is:", ["1395", "1440", "1485", "1530"], 0, "Terms 3…90: 30/2 × (3 + 90) = 15 × 93 = 1395."]
     ]
   };
 
@@ -282,5 +282,6 @@
     ]);
   }
   render();
-  show(location.hash === "#dashboard" ? "dashboard" : location.hash === "#practice" ? "practice" : "home");
+  var h = (location.hash || "").slice(1);
+  show(["dashboard", "practice", "test"].indexOf(h) > -1 ? h : "home");
 })();
