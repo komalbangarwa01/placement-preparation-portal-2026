@@ -152,3 +152,45 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
   .theme-btn { width: 100%; border-radius: 12px; height: 40px; }
   .features, .stats { grid-template-columns: 1fr; }
 }
+/* ---------- Reasoning Practice module ---------- */
+.pill { border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: .4rem .9rem; font-size: .82rem; font-weight: 600; }
+.pill b { color: var(--text); }
+.tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin: 0 0 1.2rem; }
+.rtab { border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: .55rem 1.1rem; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer; transition: .2s; }
+.rtab:hover { transform: translateY(-1px); color: var(--text); }
+.rtab.active { background: var(--text); color: var(--surface); border-color: var(--text); }
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .7rem; margin: .4rem 0 .2rem; }
+.mode { position: relative; display: block; cursor: pointer; }
+.mode input { position: absolute; opacity: 0; inset: 0; }
+.mode span { display: block; border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1rem; transition: .2s; background: var(--bg); }
+.mode span b { display: block; font-size: .95rem; }
+.mode span small { color: var(--muted); }
+.mode:hover span { transform: translateY(-2px); }
+.mode input:checked + span { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 16%, transparent); }
+.setup-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .8rem; margin: 1rem 0 .4rem; }
+.advice { margin-top: 1rem; }
+.advice p { color: var(--muted); margin: .3rem 0 0; line-height: 1.6; }
+.session-tools { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.tag { display: inline-block; background: color-mix(in oklab, var(--brand-2) 14%, transparent); color: var(--brand-2); border-radius: 999px; padding: .3rem .7rem; font-size: .78rem; font-weight: 700; }
+#rBookmark.on { border-color: var(--warn); color: var(--warn); }
+.quiz-actions.end { justify-content: space-between; align-items: center; }
+.quiz-actions.end small { color: var(--muted); font-weight: 600; }
+.opt.right { border-color: var(--ok); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ok) 18%, transparent); }
+.opt.wrong { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 18%, transparent); }
+.explain { margin-top: 1rem; border-radius: 16px; padding: .9rem 1.1rem; border: 1px solid var(--line); background: var(--bg); animation: rise .3s ease both; }
+.explain.ok { border-color: color-mix(in oklab, var(--ok) 45%, var(--line)); }
+.explain.bad { border-color: color-mix(in oklab, var(--brand) 45%, var(--line)); }
+.explain p { margin: .5rem 0 .3rem; color: var(--muted); line-height: 1.6; }
+.explain small { color: var(--muted); }
+.week { display: flex; align-items: flex-end; gap: .6rem; height: 150px; margin-top: 1rem; }
+.wk-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: .35rem; height: 100%; }
+.wk-col i { display: block; width: 100%; max-width: 46px; border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 45%, var(--surface))); transition: height .5s ease; }
+.wk-col b { font-size: .82rem; }
+.wk-col span { font-size: .72rem; color: var(--muted); font-weight: 600; }
+#rQText { white-space: pre-line; }
+.review .rev .tag { margin-right: .4rem; }
+.review .rev p { white-space: pre-line; }
+@media (max-width: 720px) {
+  .week { height: 120px; gap: .3rem; }
+  .quiz-actions.end { flex-direction: column; align-items: stretch; gap: .6rem; }
+}
