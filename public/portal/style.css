@@ -97,6 +97,45 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
 .hint { min-height: 1.1rem; margin: 0; font-size: .85rem; color: var(--ok); font-weight: 600; }
 .foot { text-align: center; color: var(--muted); font-size: .82rem; padding: 2rem 1rem 3rem; }
 
+/* QUIZ */
+.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.level { text-align: left; cursor: pointer; font: inherit; color: var(--text); display: grid; gap: .6rem; justify-items: start; }
+.quiz-top { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 1rem; margin-bottom: .8rem; }
+.min-w { min-width: 0; }
+.quiz-top h2 { margin: 0; font-size: clamp(1.3rem, 4vw, 1.8rem); }
+.quiz-top small { color: var(--muted); font-weight: 600; }
+.timer { font-family: Sora; font-weight: 700; font-size: 1.15rem; padding: .5rem .9rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+.timer.warn { color: #fff; background: var(--brand); border-color: transparent; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: .65; } }
+.bar.slim { height: 6px; margin: 0 0 1rem; }
+.quiz-card { margin-bottom: 1rem; }
+.qtext { font-family: Sora; font-weight: 600; font-size: 1.08rem; line-height: 1.5; color: var(--text); margin: 0 0 1rem; }
+.options { display: grid; gap: .6rem; }
+.opt { display: flex; gap: .7rem; align-items: center; text-align: left; font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: .8rem 1rem; cursor: pointer; transition: .18s; }
+.opt:hover { transform: translateX(3px); border-color: var(--brand); }
+.opt b { width: 26px; height: 26px; flex: 0 0 26px; display: grid; place-items: center; border-radius: 8px; background: var(--line); font-size: .8rem; }
+.opt.sel { border-color: var(--brand); background: color-mix(in oklab, var(--brand) 12%, transparent); }
+.opt.sel b { background: var(--brand); color: #fff; }
+.quiz-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.dots { display: flex; flex-wrap: wrap; gap: .3rem; flex: 1; justify-content: center; }
+.dots span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 8px; font-size: .72rem; font-weight: 700; background: var(--surface); border: 1px solid var(--line); color: var(--muted); cursor: pointer; }
+.dots span.done { background: var(--brand-2); border-color: transparent; color: #fff; }
+.dots span.cur { outline: 2px solid var(--brand); }
+.review-title { font-family: Sora; margin: 1.6rem 0 .8rem; }
+.review { display: grid; gap: .8rem; }
+.rev { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: 16px; padding: 1rem; }
+.rev.bad { border-left-color: var(--brand); }
+.rev p { margin: 0 0 .5rem; color: var(--text); font-weight: 600; }
+.rev .ans { font-size: .88rem; color: var(--muted); font-weight: 500; }
+.rev .ans b { color: var(--text); }
+.rev .exp { margin-top: .5rem; font-size: .88rem; color: var(--muted); line-height: 1.55; }
+
+@media (max-width: 900px) { .levels { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .quiz-actions .btn { flex: 1; text-align: center; }
+  .dots { order: 3; width: 100%; }
+}
+
 @media (max-width: 900px) {
   .features, .stats { grid-template-columns: repeat(2, 1fr); }
   .hero { grid-template-columns: 1fr; }

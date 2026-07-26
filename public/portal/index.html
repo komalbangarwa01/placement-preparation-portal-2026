@@ -14,6 +14,7 @@
   <div class="nav-links" id="navLinks">
     <a href="#home" class="nav-link active" data-page="home">Home</a>
     <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
+    <a href="#test" class="nav-link" data-page="test">Aptitude Test</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -29,7 +30,7 @@
         <p class="lede">Log every aptitude, coding and interview mock test. PrepDeck turns your attempts into strong-topic wins and weak-topic hit lists — all stored right in your browser.</p>
         <div class="cta-row">
           <a href="#dashboard" class="btn primary" data-page="dashboard">Open Dashboard</a>
-          <a href="#practice" class="btn ghost" data-page="practice">Log a Test</a>
+          <a href="#test" class="btn ghost" data-page="test">Take Aptitude Test</a>
         </div>
       </div>
       <div class="hero-card float">
@@ -104,6 +105,52 @@
       <button class="btn primary" type="submit">Save attempt</button>
       <p class="hint" id="formHint"></p>
     </form>
+  </section>
+
+  <!-- APTITUDE TEST -->
+  <section id="page-test" class="page">
+    <!-- level picker -->
+    <div id="testIntro">
+      <div class="page-head"><h2>Aptitude Test</h2></div>
+      <p class="lede">10 multiple-choice questions · 30 minute timer · instant scoring with explanations. Pick a difficulty to begin.</p>
+      <div class="levels">
+        <button class="card level" data-level="Easy"><h3>🟢 Easy</h3><p>Fundamentals: percentages, averages, simple reasoning.</p><span class="btn primary sm">Start Easy</span></button>
+        <button class="card level" data-level="Medium"><h3>🟠 Medium</h3><p>Time &amp; work, probability, data interpretation.</p><span class="btn primary sm">Start Medium</span></button>
+        <button class="card level" data-level="Hard"><h3>🔴 Hard</h3><p>Advanced permutations, ages, tricky series.</p><span class="btn primary sm">Start Hard</span></button>
+      </div>
+    </div>
+
+    <!-- running quiz -->
+    <div id="testRun" hidden>
+      <div class="quiz-top">
+        <div class="min-w"><h2 id="quizLevel">Aptitude Test</h2><small id="quizProgress">Question 1 of 10</small></div>
+        <div class="timer" id="timer">30:00</div>
+      </div>
+      <div class="bar slim"><i id="quizBar"></i></div>
+      <div class="card quiz-card">
+        <p class="qtext" id="qText"></p>
+        <div class="options" id="qOptions"></div>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn ghost" id="prevBtn">← Previous</button>
+        <div class="dots" id="qDots"></div>
+        <button class="btn ghost" id="nextBtn">Next →</button>
+        <button class="btn primary" id="submitBtn">Submit test</button>
+      </div>
+    </div>
+
+    <!-- result -->
+    <div id="testResult" hidden>
+      <div class="page-head"><h2>Result</h2><button class="btn ghost sm" id="retakeBtn">Take another test</button></div>
+      <div class="stats">
+        <div class="card stat"><span>Score</span><strong id="resScore">0/10</strong></div>
+        <div class="card stat"><span>Percentage</span><strong id="resPct">0%</strong></div>
+        <div class="card stat"><span>Level</span><strong id="resLevel">—</strong></div>
+        <div class="card stat"><span>Time Taken</span><strong id="resTime">—</strong></div>
+      </div>
+      <h3 class="review-title">Answer explanations</h3>
+      <div id="reviewList" class="review"></div>
+    </div>
   </section>
 </main>
 
