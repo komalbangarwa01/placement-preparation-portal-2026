@@ -98,7 +98,11 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
 .foot { text-align: center; color: var(--muted); font-size: .82rem; padding: 2rem 1rem 3rem; }
 
 /* QUIZ */
-.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.setup { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.setup > label { display: grid; gap: .35rem; font-size: .8rem; font-weight: 700; color: var(--muted); max-width: 420px; }
+.setup select { padding: .7rem .85rem; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
+.levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.level:disabled { opacity: .55; cursor: progress; }
 .level { text-align: left; cursor: pointer; font: inherit; color: var(--text); display: grid; gap: .6rem; justify-items: start; }
 .quiz-top { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 1rem; margin-bottom: .8rem; }
 .min-w { min-width: 0; }
