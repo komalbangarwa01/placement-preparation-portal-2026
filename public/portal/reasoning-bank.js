@@ -323,7 +323,7 @@
         exp = "The " + z + " that are " + y + " need not belong to the " + x + " group, so no definite link can be drawn between " + z + " and " + x + ".";
         wrong = ["Yes, it definitely follows", "Yes, by conversion", "Both conclusions follow"];
       } else {
-        question = "Statements: No " + x + " are " + y + ". Some " + y + " are " + z + ".\nConclusion: Some " + z + " are not " + x + ".\nDoes the conclusion follow?";
+        question = "Statements: No " + xs + " is a " + ys + ". Some " + y + " are " + z + ".\nConclusion: Some " + z + " are not " + x + ".\nDoes the conclusion follow?";
         ans = "Yes, it definitely follows";
         exp = "The " + z + " that are " + y + " cannot be " + x + ", because no " + x + " is a " + y + ". Hence some " + z + " are definitely not " + x + ".";
         wrong = ["No, it does not follow", "Cannot be determined", "Only if all " + z + " are " + y];
