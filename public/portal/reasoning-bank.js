@@ -325,7 +325,7 @@
       } else {
         question = "Statements: No " + xs + " is a " + ys + ". Some " + y + " are " + z + ".\nConclusion: Some " + z + " are not " + x + ".\nDoes the conclusion follow?";
         ans = "Yes, it definitely follows";
-        exp = "The " + z + " that are " + y + " cannot be " + x + ", because no " + x + " is a " + y + ". Hence some " + z + " are definitely not " + x + ".";
+        exp = "The " + z + " that are " + y + " cannot be " + x + ", because no " + xs + " is a " + ys + ". Hence some " + z + " are definitely not " + x + ".";
         wrong = ["No, it does not follow", "Cannot be determined", "Only if all " + z + " are " + y];
       }
     }
