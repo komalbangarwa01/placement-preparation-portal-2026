@@ -146,22 +146,96 @@
 
     <!-- ANALYTICS PANE -->
     <div id="rPane-analytics" hidden>
-      <div class="page-head"><h3>Performance analytics</h3><button class="btn ghost sm" id="rResetStats">Clear reasoning data</button></div>
+      <div class="page-head">
+        <div class="min-w">
+          <h3>Candidate Assessment Dashboard</h3>
+          <small class="muted" id="aUpdated">Updated automatically after every test</small>
+        </div>
+        <div class="session-tools">
+          <button class="btn primary sm" id="aDownload">Download performance summary</button>
+          <button class="btn ghost sm" id="rResetStats">Clear reasoning data</button>
+        </div>
+      </div>
+
+      <!-- READINESS BANNER -->
+      <div class="card readiness">
+        <div class="ring" id="aRing"><span><strong id="aReadiness">0</strong><small>Readiness</small></span></div>
+        <div class="readiness-copy">
+          <span class="badge" id="aLevelBadge">Beginner</span>
+          <h3 id="aLevelTitle">Building the fundamentals</h3>
+          <p id="aLevelNote">Complete a few practice sets to generate your placement readiness profile.</p>
+          <div class="ladder" id="aLadder"></div>
+          <ul class="rfactors" id="aFactors"></ul>
+        </div>
+      </div>
+
+      <!-- OVERVIEW -->
+      <h3 class="sec-title">Dashboard overview</h3>
       <div class="stats">
-        <div class="card stat"><span>Questions Attempted</span><strong id="rTotal">0</strong></div>
+        <div class="card stat"><span>Total Tests Attempted</span><strong id="aTests">0</strong><small id="aTestsSub">sessions &amp; logged tests</small></div>
+        <div class="card stat"><span>Total Questions Solved</span><strong id="rTotal">0</strong><small>across all practice</small></div>
+        <div class="card stat"><span>Average Score</span><strong id="aAvgScore">0%</strong><small>per test attempt</small></div>
+        <div class="card stat"><span>Overall Accuracy Rate</span><strong id="rAccuracy">0%</strong><small>question level</small></div>
+        <div class="card stat"><span>Time Efficiency Score</span><strong id="aTimeEff">0</strong><small id="aTimeEffSub">vs 45s benchmark</small></div>
+        <div class="card stat"><span>Current Performance Level</span><strong id="aLevel">Beginner</strong><small>overall band</small></div>
+      </div>
+
+      <!-- METRICS -->
+      <h3 class="sec-title">Performance metrics</h3>
+      <div class="stats">
         <div class="card stat"><span>Correct Answers</span><strong id="rCorrect">0</strong></div>
         <div class="card stat"><span>Incorrect Answers</span><strong id="rIncorrect">0</strong></div>
-        <div class="card stat"><span>Accuracy</span><strong id="rAccuracy">0%</strong></div>
-        <div class="card stat"><span>Daily Streak</span><strong id="rStreak">0 days</strong></div>
         <div class="card stat"><span>Avg Time / Question</span><strong id="rAvgTime">0s</strong></div>
+        <div class="card stat"><span>Daily Practice Streak</span><strong id="rStreak">0 days</strong></div>
+        <div class="card stat"><span>Improvement Trend</span><strong id="aTrend">—</strong><small id="aTrendSub">last 20 vs previous 20</small></div>
+        <div class="card stat"><span>Learning Progress Index</span><strong id="aLPI">0</strong><small>coverage · accuracy · volume</small></div>
+      </div>
+
+      <!-- CHARTS -->
+      <h3 class="sec-title">Visual analytics</h3>
+      <div class="grid-2">
+        <div class="card chart-card"><h3>Weekly Performance Trend <small>last 7 days</small></h3><div class="chart-wrap"><canvas id="chWeek"></canvas></div></div>
+        <div class="card chart-card"><h3>Monthly Performance Trend <small>last 6 months</small></h3><div class="chart-wrap"><canvas id="chMonth"></canvas></div></div>
+        <div class="card chart-card"><h3>Topic Strength Distribution</h3><div class="chart-wrap"><canvas id="chTopics"></canvas></div></div>
+        <div class="card chart-card"><h3>Difficulty-wise Performance</h3><div class="chart-wrap"><canvas id="chLevels"></canvas></div></div>
+        <div class="card chart-card"><h3>Correct vs Incorrect Analysis</h3><div class="chart-wrap"><canvas id="chSplit"></canvas></div></div>
+        <div class="card chart-card"><h3>Progress Timeline <small>rolling accuracy</small></h3><div class="chart-wrap"><canvas id="chTimeline"></canvas></div></div>
+      </div>
+
+      <div class="card">
+        <h3>Accuracy Heatmap <small id="aHeatNote">last 12 weeks</small></h3>
+        <div class="heat" id="aHeat"></div>
+        <div class="heat-legend"><span>Lower accuracy</span><i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><span>Higher accuracy</span></div>
+      </div>
+
+      <!-- SKILL ASSESSMENT -->
+      <h3 class="sec-title">Skill assessment</h3>
+      <div class="grid-2">
+        <div class="card"><h3>Strong Areas <small>≥ 70% accuracy</small></h3><ul class="topics" id="rStrong"></ul></div>
+        <div class="card"><h3>Areas Requiring Improvement <small>&lt; 70% accuracy</small></h3><ul class="topics weak" id="rWeak"></ul></div>
+        <div class="card"><h3>Recommended Focus Topics</h3><ul class="topics" id="aFocus"></ul></div>
+        <div class="card"><h3>Practice Priority Ranking</h3><ol class="priority" id="aPriority"></ol></div>
+      </div>
+
+      <!-- INSIGHTS -->
+      <h3 class="sec-title">Insights</h3>
+      <div class="grid-2">
+        <div class="card"><h3>Personalised Performance Insights</h3><ul class="insights" id="aInsights"></ul></div>
+        <div class="card"><h3>Recommended Next Steps</h3><ul class="insights steps" id="aSteps"></ul></div>
+        <div class="card"><h3>Suggested Practice Areas</h3><ul class="insights" id="aSuggest"></ul></div>
+        <div class="card"><h3>Improvement Opportunities</h3><ul class="insights" id="aOpps"></ul></div>
+      </div>
+
+      <!-- REPORTS -->
+      <h3 class="sec-title">Reports</h3>
+      <div class="card">
+        <h3>Weekly report <small id="rWeekTotal"></small></h3>
+        <div class="week" id="rWeek"></div>
+        <ul class="report" id="aWeekReport"></ul>
       </div>
       <div class="card">
-        <h3>Weekly progress report <small id="rWeekTotal"></small></h3>
-        <div class="week" id="rWeek"></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><h3>Strong Topics <small>≥ 70% accuracy</small></h3><ul class="topics" id="rStrong"></ul></div>
-        <div class="card"><h3>Weak Topics <small>&lt; 70% accuracy</small></h3><ul class="topics weak" id="rWeak"></ul></div>
+        <h3>Monthly report <small id="aMonthTotal"></small></h3>
+        <ul class="report" id="aMonthReport"></ul>
       </div>
     </div>
 
@@ -297,8 +371,10 @@
 </main>
 
 <footer class="foot">Built for placement season · data stored locally</footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="./reasoning-bank.js"></script>
 <script src="./script.js"></script>
 <script src="./reasoning.js"></script>
+<script src="./assessment.js"></script>
 </body>
 </html>
