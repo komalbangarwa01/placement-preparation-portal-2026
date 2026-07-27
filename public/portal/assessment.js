@@ -415,6 +415,12 @@
     $("aTests").textContent = M.tests + sessions;
     $("aTestsSub").textContent = M.tests + " logged · " + sessions + " practice sessions";
     $("aAvgScore").textContent = round(M.avgScore) + "%";
+    $("rTotal").textContent = M.total;
+    $("rCorrect").textContent = M.correct;
+    $("rIncorrect").textContent = M.incorrect;
+    $("rAccuracy").textContent = round(M.acc) + "%";
+    $("rAvgTime").textContent = round(M.avgTime) + "s";
+    $("rStreak").textContent = M.streak + (M.streak === 1 ? " day" : " days");
     $("aTimeEff").textContent = M.timeEff + "/100";
     $("aTimeEffSub").textContent = round(M.avgTime) + "s avg vs 45s benchmark";
 
