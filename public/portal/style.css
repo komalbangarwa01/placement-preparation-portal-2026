@@ -266,3 +266,24 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
   .rfactors li { grid-template-columns: 110px 1fr 44px; font-size: .8rem; }
   .chart-wrap { height: 210px; }
 }
+
+/* ---------- Resume Analysis System ---------- */
+.drop { border: 2px dashed color-mix(in oklab, var(--muted) 38%, transparent); border-radius: 18px; padding: 2.2rem 1.2rem; display: grid; gap: .35rem; place-items: center; text-align: center; cursor: pointer; transition: .2s; background: color-mix(in oklab, var(--surface) 92%, var(--brand) 3%); }
+.drop:hover, .drop:focus-visible, .drop.over { border-color: var(--brand); transform: translateY(-2px); outline: none; }
+.drop strong { font-family: Sora, sans-serif; font-size: 1rem; }
+.drop span { font-size: .85rem; color: var(--muted); }
+.filechip { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-top: .9rem; padding: .6rem .8rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.filechip span { font-weight: 700; font-size: .9rem; }
+.filechip small { color: var(--muted); font-size: .8rem; margin-right: auto; }
+.cv-preview { max-height: 300px; overflow: auto; white-space: pre-wrap; font-size: .82rem; line-height: 1.6; color: var(--muted); background: color-mix(in oklab, var(--muted) 7%, transparent); border-radius: 14px; padding: 1rem; margin: 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: .3rem .75rem; font-size: .8rem; font-weight: 600; background: color-mix(in oklab, var(--brand-2) 10%, transparent); color: var(--text); }
+.chips.gap .chip { background: color-mix(in oklab, var(--brand) 12%, transparent); }
+.chips .empty { color: var(--muted); font-size: .88rem; }
+.kv { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.kv li { display: flex; justify-content: space-between; gap: 1rem; font-size: .88rem; padding-bottom: .45rem; border-bottom: 1px dashed var(--line); }
+.kv li:last-child { border-bottom: 0; padding-bottom: 0; }
+.kv li span { color: var(--muted); }
+.kv li b { text-align: right; word-break: break-word; }
+#page-resume textarea { width: 100%; resize: vertical; border: 1px solid var(--line); border-radius: 14px; padding: .7rem .85rem; font: inherit; font-size: .9rem; background: var(--surface); color: var(--text); }
+#page-resume textarea:focus { outline: none; border-color: var(--brand); }
