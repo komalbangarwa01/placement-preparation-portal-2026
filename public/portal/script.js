@@ -23,7 +23,7 @@
 
   /* ---------- routing ---------- */
   function show(page) {
-    ["home", "dashboard", "practice", "test", "reason"].forEach(function (p) {
+    ["home", "dashboard", "practice", "test", "reason", "resume"].forEach(function (p) {
       $("page-" + p).classList.toggle("active", p === page);
     });
     document.querySelectorAll(".nav-link").forEach(function (a) {
@@ -33,6 +33,7 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (page === "dashboard") render();
     if (page === "reason" && window.PrepDeckReasoning) window.PrepDeckReasoning.render();
+    if (page === "resume" && window.PrepDeckResume) window.PrepDeckResume.render();
   }
   document.querySelectorAll("[data-page]").forEach(function (el) {
     el.addEventListener("click", function (e) { e.preventDefault(); show(el.dataset.page); });
@@ -338,5 +339,5 @@
   };
   render();
   var h = (location.hash || "").slice(1);
-  show(["dashboard", "practice", "test", "reason"].indexOf(h) > -1 ? h : "home");
+  show(["dashboard", "practice", "test", "reason", "resume"].indexOf(h) > -1 ? h : "home");
 })();
