@@ -143,7 +143,8 @@
     var sec = splitSections(text);
     var flat = text.replace(/\s+/g, " ");
     var email = (text.match(/[\w.+-]+@[\w-]+\.[\w.]{2,}/) || [""])[0];
-    var phone = (text.match(/(\+?\d{1,3}[\s-]?)?\(?\d{3,5}\)?[\s-]?\d{3}[\s-]?\d{3,4}/) || [""])[0].trim();
+    var phone = (text.match(/(?:\+\d{1,3}[\s.-]?)?\(?\d{3,5}\)?[\s.-]?\d{3,5}[\s.-]?\d{3,5}/) || [""])[0].trim();
+    if (phone.replace(/\D/g, "").length < 10) phone = "";
     var links = {
       linkedin: /linkedin\.com\/[\w\-/]+/i.test(flat),
       github: /github\.com\/[\w\-/]+/i.test(flat),
