@@ -369,13 +369,190 @@
       <div id="reviewList" class="review"></div>
     </div>
   </section>
+
+  <!-- RESUME ANALYSIS SYSTEM -->
+  <section id="page-resume" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Resume Analysis System</h2>
+        <small class="muted">Recruiter-grade ATS screening, skill gap mapping and improvement planning</small>
+      </div>
+      <span class="pill">Analyses saved: <b id="cvHistoryCount">0</b></span>
+    </div>
+
+    <div class="tabs">
+      <button class="rtab ctab active" data-cvpane="upload">Upload &amp; Analyse</button>
+      <button class="rtab ctab" data-cvpane="report">Analysis Report</button>
+      <button class="rtab ctab" data-cvpane="trends">Dashboard Analytics</button>
+    </div>
+
+    <!-- UPLOAD PANE -->
+    <div id="cvPane-upload">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Upload resume <small>PDF or DOCX · max 5 MB</small></h3>
+          <div class="drop" id="cvDrop" tabindex="0" role="button" aria-label="Upload resume">
+            <strong>Drag &amp; drop your resume here</strong>
+            <span>or click to browse — .pdf, .docx</span>
+          </div>
+          <input type="file" id="cvFile" accept=".pdf,.docx" hidden />
+          <p class="hint" id="cvHint"></p>
+          <div class="filechip" id="cvFileChip" hidden>
+            <span id="cvFileName">resume.pdf</span>
+            <small id="cvFileMeta"></small>
+            <button class="btn ghost sm" id="cvClear">Remove</button>
+          </div>
+        </div>
+
+        <div class="card setup">
+          <h3>Target role &amp; job description</h3>
+          <label>Target job role
+            <select id="cvRole">
+              <option>Frontend Developer</option>
+              <option>Backend Developer</option>
+              <option>Full Stack Developer</option>
+              <option>Data Analyst</option>
+              <option>Software Engineer</option>
+              <option>UI/UX Designer</option>
+            </select>
+          </label>
+          <label>Job description <small>(optional — enables job match analysis)</small>
+            <textarea id="cvJD" rows="5" placeholder="Paste the job description to compare your resume against it."></textarea>
+          </label>
+          <div class="cta-row">
+            <button class="btn primary" id="cvAnalyse" disabled>Run full analysis</button>
+            <button class="btn ghost" id="cvSample">Load sample resume</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="cvPreviewCard" hidden>
+        <h3>Resume preview <small id="cvPreviewMeta"></small></h3>
+        <pre class="cv-preview" id="cvPreview"></pre>
+      </div>
+    </div>
+
+    <!-- REPORT PANE -->
+    <div id="cvPane-report" hidden>
+      <div id="cvEmpty" class="card"><p class="empty">No analysis yet — upload a resume on the first tab to generate a recruiter report.</p></div>
+
+      <div id="cvReport" hidden>
+        <div class="page-head">
+          <div class="min-w"><h3 id="cvReportTitle">Candidate analysis</h3><small class="muted" id="cvReportSub"></small></div>
+          <div class="session-tools">
+            <button class="btn primary sm" id="cvDownload">Download PDF report</button>
+            <button class="btn ghost sm" id="cvDownloadTxt">Download summary</button>
+          </div>
+        </div>
+
+        <!-- ATS banner -->
+        <div class="card readiness">
+          <div class="ring" id="cvRing"><span><strong id="cvAts">0</strong><small>ATS Score</small></span></div>
+          <div class="readiness-copy">
+            <span class="badge" id="cvLevelBadge">Beginner</span>
+            <h3 id="cvLevelTitle">Resume needs structural work</h3>
+            <p id="cvVerdict"></p>
+            <ul class="rfactors" id="cvFactors"></ul>
+          </div>
+        </div>
+
+        <h3 class="sec-title">Score breakdown</h3>
+        <div class="stats">
+          <div class="card stat"><span>Resume Structure</span><strong id="cvStructure">0</strong><small>sections &amp; ordering</small></div>
+          <div class="card stat"><span>Keyword Optimization</span><strong id="cvKeywords">0</strong><small>role keyword coverage</small></div>
+          <div class="card stat"><span>Skills Relevance</span><strong id="cvSkills">0</strong><small>vs role skill map</small></div>
+          <div class="card stat"><span>Formatting</span><strong id="cvFormat">0</strong><small>ATS parse safety</small></div>
+          <div class="card stat"><span>Placement Readiness</span><strong id="cvReadiness">0</strong><small id="cvReadinessSub">overall band</small></div>
+          <div class="card stat"><span>Interview Readiness</span><strong id="cvInterview">0</strong><small>depth &amp; evidence</small></div>
+          <div class="card stat"><span>Resume Strength Index</span><strong id="cvStrength">0</strong><small>weighted composite</small></div>
+          <div class="card stat"><span>Job Match</span><strong id="cvMatch">—</strong><small id="cvMatchSub">paste a JD to score</small></div>
+        </div>
+
+        <h3 class="sec-title">Visual analytics</h3>
+        <div class="grid-2">
+          <div class="card chart-card"><h3>Score profile</h3><div class="chart-wrap"><canvas id="chCvRadar"></canvas></div></div>
+          <div class="card chart-card"><h3>Skill coverage by group</h3><div class="chart-wrap"><canvas id="chCvSkills"></canvas></div></div>
+        </div>
+
+        <h3 class="sec-title">Extracted profile</h3>
+        <div class="grid-2">
+          <div class="card"><h3>Contact &amp; identity</h3><ul class="kv" id="cvIdentity"></ul></div>
+          <div class="card"><h3>Education</h3><ul class="insights" id="cvEducation"></ul></div>
+          <div class="card"><h3>Skills detected <small id="cvSkillCount"></small></h3><div class="chips" id="cvSkillChips"></div></div>
+          <div class="card"><h3>Certifications</h3><ul class="insights" id="cvCerts"></ul></div>
+          <div class="card"><h3>Work experience</h3><ul class="insights" id="cvWork"></ul></div>
+          <div class="card"><h3>Internships</h3><ul class="insights" id="cvIntern"></ul></div>
+          <div class="card"><h3>Projects</h3><ul class="insights" id="cvProjects"></ul></div>
+          <div class="card"><h3>Achievements</h3><ul class="insights" id="cvAchieve"></ul></div>
+        </div>
+
+        <h3 class="sec-title">Skill gap analysis <small class="muted" id="cvGapRole"></small></h3>
+        <div class="grid-2">
+          <div class="card"><h3>Missing technical skills</h3><div class="chips gap" id="cvGapSkills"></div></div>
+          <div class="card"><h3>Missing tools</h3><div class="chips gap" id="cvGapTools"></div></div>
+          <div class="card"><h3>Missing certifications</h3><div class="chips gap" id="cvGapCerts"></div></div>
+          <div class="card"><h3>Missing project experience</h3><ul class="insights" id="cvGapProjects"></ul></div>
+        </div>
+
+        <h3 class="sec-title">Project evaluation</h3>
+        <div id="cvProjectEval" class="review"></div>
+
+        <h3 class="sec-title">Job match analysis</h3>
+        <div class="grid-2">
+          <div class="card"><h3>Missing keywords from the job description</h3><div class="chips gap" id="cvJdKeywords"></div></div>
+          <div class="card"><h3>Match recommendations</h3><ul class="insights" id="cvJdNotes"></ul></div>
+        </div>
+
+        <h3 class="sec-title">Recruiter feedback</h3>
+        <div class="card"><h3>Screening summary</h3><p id="cvRecruiterSummary" class="muted"></p></div>
+        <div class="grid-2">
+          <div class="card"><h3>What stands out</h3><ul class="insights" id="cvStrengths"></ul></div>
+          <div class="card"><h3>Screening risks</h3><ul class="insights" id="cvRisks"></ul></div>
+          <div class="card"><h3>Interview preparation focus</h3><ul class="insights" id="cvInterviewFocus"></ul></div>
+          <div class="card"><h3>Context-aware skill suggestions</h3><ul class="insights" id="cvSkillSuggest"></ul></div>
+        </div>
+
+        <h3 class="sec-title">Section-wise improvement engine</h3>
+        <div id="cvSections" class="review"></div>
+
+        <div class="card">
+          <h3>Resume optimization tips</h3>
+          <ul class="insights steps" id="cvTips"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDS PANE -->
+    <div id="cvPane-trends" hidden>
+      <div class="page-head">
+        <h3>Resume improvement history</h3>
+        <button class="btn ghost sm" id="cvClearHistory">Clear history</button>
+      </div>
+      <div class="stats">
+        <div class="card stat"><span>Analyses run</span><strong id="cvTrRuns">0</strong></div>
+        <div class="card stat"><span>Best ATS score</span><strong id="cvTrBest">0</strong></div>
+        <div class="card stat"><span>Latest ATS score</span><strong id="cvTrLatest">0</strong></div>
+        <div class="card stat"><span>Improvement</span><strong id="cvTrDelta">—</strong><small>vs first analysis</small></div>
+      </div>
+      <div class="grid-2">
+        <div class="card chart-card"><h3>ATS score trend</h3><div class="chart-wrap"><canvas id="chCvTrend"></canvas></div></div>
+        <div class="card chart-card"><h3>Skills growth tracker</h3><div class="chart-wrap"><canvas id="chCvGrowth"></canvas></div></div>
+        <div class="card chart-card"><h3>Job match performance</h3><div class="chart-wrap"><canvas id="chCvMatch"></canvas></div></div>
+        <div class="card"><h3>Analysis log</h3><ul class="activity" id="cvLog"></ul></div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="foot">Built for placement season · data stored locally</footer>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="./reasoning-bank.js"></script>
 <script src="./script.js"></script>
 <script src="./reasoning.js"></script>
 <script src="./assessment.js"></script>
+<script src="./resume.js"></script>
 </body>
 </html>
