@@ -741,7 +741,7 @@
         $("cvAnalyse").disabled = false;
         hint.textContent = "Resume loaded — choose a target role and run the analysis.";
       })
-      .catch(function (err) { hint.textContent = err.message || "Could not read that file."; });
+      .catch(function (err) { hint.classList.add("err"); hint.textContent = err.message || "Could not read that file."; });
   }
 
   var SAMPLE = [
