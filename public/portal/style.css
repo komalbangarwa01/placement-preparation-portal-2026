@@ -297,3 +297,37 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
   border-radius: 50%; animation: cvspin .7s linear infinite;
 }
 @keyframes cvspin { to { transform: rotate(360deg); } }
+
+/* ================= interview practice module ================= */
+.ivchat { max-height: 60vh; overflow-y: auto; display: grid; gap: 1rem; padding: 1.1rem; margin-top: .9rem; }
+.ivmsg { display: flex; gap: .7rem; align-items: flex-start; animation: ivin .35s ease both; }
+.ivmsg.me { flex-direction: row-reverse; }
+@keyframes ivin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.ivavatar { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-size: 1rem; }
+.ivbody { max-width: min(78%, 640px); border: 1px solid var(--line); border-radius: 16px; padding: .75rem .95rem; background: var(--surface); font-size: .92rem; line-height: 1.55; }
+.ivmsg.me .ivbody { background: color-mix(in oklab, var(--brand) 14%, transparent); border-color: color-mix(in oklab, var(--brand) 35%, var(--line)); }
+.ivmsg.feedback .ivbody { background: color-mix(in oklab, var(--brand-2) 8%, transparent); }
+.ivbody p { margin: 0 0 .3rem; }
+.ivbody p:last-child { margin-bottom: 0; }
+.ivtag { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+.ivhint { display: block; color: var(--muted); margin-top: .35rem; font-size: .8rem; }
+.ivscore { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .5rem; }
+.ivpill { border-radius: 999px; padding: .18rem .65rem; font-size: .78rem; font-weight: 800; color: #fff; background: var(--muted); }
+.ivpill.good { background: #16a34a; } .ivpill.mid { background: #f59e0b; } .ivpill.bad { background: #e5484d; }
+.ivdim { font-size: .74rem; border: 1px solid var(--line); border-radius: 999px; padding: .18rem .55rem; color: var(--muted); }
+.ivdim b { color: var(--text); margin-left: .25rem; }
+.ivfix { margin: .4rem 0 0; padding-left: 1.1rem; display: grid; gap: .25rem; font-size: .85rem; color: var(--muted); }
+.ivideal { margin-top: .5rem; font-size: .85rem; }
+.ivideal summary { cursor: pointer; font-weight: 600; }
+.ivtyping { display: inline-flex; gap: .25rem; }
+.ivtyping i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: ivblink 1.2s infinite; }
+.ivtyping i:nth-child(2) { animation-delay: .2s; } .ivtyping i:nth-child(3) { animation-delay: .4s; }
+@keyframes ivblink { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
+.ivcompose { margin-top: .9rem; display: grid; gap: .7rem; }
+.ivcompose textarea { width: 100%; resize: vertical; border: 1px solid var(--line); border-radius: 14px; padding: .75rem .9rem; font: inherit; font-size: .92rem; background: var(--surface); color: var(--text); }
+.ivcompose textarea:focus { outline: none; border-color: var(--brand); }
+#ivHistoryList li .btn { margin-left: .6rem; }
+.badge.good { background: color-mix(in oklab, #16a34a 18%, transparent); }
+.badge.mid { background: color-mix(in oklab, #f59e0b 20%, transparent); }
+.badge.bad { background: color-mix(in oklab, #e5484d 18%, transparent); }
+@media (max-width: 640px) { .ivbody { max-width: 88%; } .ivchat { max-height: 55vh; padding: .8rem; } }
