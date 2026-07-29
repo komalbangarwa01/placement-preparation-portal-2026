@@ -559,22 +559,51 @@
 
   /* ---------------- analysis flow ---------------- */
   function analyse() {
-    if (!pending) return;
+    var hintEl = $("cvHint");
+    var button = $("cvAnalyse");
+    if (!pending) {
+      hintEl.textContent = "No resume uploaded — drag & drop a PDF/DOCX file or load the sample resume first.";
+      hintEl.classList.add("err");
+      $("cvDrop").classList.add("over");
+      setTimeout(function () { $("cvDrop").classList.remove("over"); }, 1200);
+      return;
+    }
+    if (busy) return;
+    hintEl.classList.remove("err");
     var role = $("cvRole").value;
     var jd = $("cvJD").value;
     var hint = $("cvHint");
     var btn = $("cvAnalyse");
+    busy = true;
     btn.disabled = true;
-    hint.textContent = "Analysing resume against " + role + " benchmarks…";
+    btn.dataset.label = btn.dataset.label || btn.textContent;
+    btn.textContent = "Analysing…";
+    btn.classList.add("loading");
+    hint.textContent = "Analysing resume against " + role + " benchmarks… this can take up to a minute.";
 
-    var parsed = parseResume(pending.text);
-    var s = score(parsed, role);
-    var match = jdMatch(parsed, jd);
-    var base = localReview(parsed, s, role, match);
+    var parsed, s, match, base;
+    try {
+      parsed = parseResume(pending.text);
+      s = score(parsed, role);
+      match = jdMatch(parsed, jd);
+      base = localReview(parsed, s, role, match);
+    } catch (e) {
+      busy = false;
+      btn.disabled = false;
+      btn.classList.remove("loading");
+      btn.textContent = btn.dataset.label;
+      hint.classList.add("err");
+      hint.textContent = "Could not analyse this resume: " + (e && e.message ? e.message : "unexpected error") + ".";
+      return;
+    }
+
+    var controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timer = setTimeout(function () { if (controller) controller.abort(); }, 60000);
 
     fetch("/api/public/resume", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: controller ? controller.signal : undefined,
       body: JSON.stringify({
         text: pending.text, role: role, jobDescription: jd,
         scores: { ats: s.ats, structure: s.structure, keywords: s.keywords, relevance: s.relevance, formatting: s.formatting },
@@ -584,22 +613,33 @@
       .then(function (res) { return res.ok ? res.json() : null; })
       .catch(function () { return null; })
       .then(function (data) {
+        clearTimeout(timer);
+        try {
         var review = mergeReview(base, data && data.review);
         current = {
           parsed: parsed, scores: s, role: role, match: match, review: review,
           fileName: pending.name, date: Date.now()
         };
-        localStorage.setItem(LKEY, JSON.stringify(current));
+        try { localStorage.setItem(LKEY, JSON.stringify(current)); } catch (e) { /* quota */ }
         var h = hist();
         h.push({ date: current.date, role: role, fileName: pending.name, ats: s.ats, readiness: s.readiness, skills: parsed.skills.length, match: match ? match.pct : 0 });
         saveHist(h);
 
+        hint.classList.remove("err");
         hint.textContent = data ? "Analysis complete — recruiter review generated." : "Analysis complete (offline scoring engine).";
-        btn.disabled = false;
         renderReport();
         renderTrends();
         switchPane("report");
         setTimeout(function () { hint.textContent = ""; }, 4000);
+        } catch (e) {
+          hint.classList.add("err");
+          hint.textContent = "Analysis finished but the report failed to render: " + (e && e.message ? e.message : "unexpected error") + ".";
+          if (window.console) console.error(e);
+        }
+        busy = false;
+        btn.disabled = false;
+        btn.classList.remove("loading");
+        btn.textContent = btn.dataset.label;
       });
   }
 
