@@ -803,7 +803,7 @@
   $("cvClear").addEventListener("click", function () {
     pending = null; $("cvFile").value = "";
     $("cvFileChip").hidden = true; $("cvPreviewCard").hidden = true;
-    $("cvAnalyse").disabled = true; $("cvHint").textContent = "";
+    $("cvHint").textContent = ""; $("cvHint").classList.remove("err");
   });
   $("cvSample").addEventListener("click", function () {
     pending = { text: SAMPLE, name: "sample-resume.txt", size: SAMPLE.length };
@@ -817,6 +817,7 @@
     $("cvHint").textContent = "Sample resume loaded — run the analysis to see a full report.";
   });
   $("cvAnalyse").addEventListener("click", analyse);
+  $("cvAnalyse").disabled = false;
   $("cvDownload").addEventListener("click", downloadPdf);
   $("cvDownloadTxt").addEventListener("click", downloadTxt);
   $("cvClearHistory").addEventListener("click", function () {
