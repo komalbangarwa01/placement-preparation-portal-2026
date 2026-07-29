@@ -384,6 +384,7 @@
   /* ---------------- state ---------------- */
   var current = null;   // { parsed, scores, role, match, review, file, date }
   var pending = null;   // { text, name, size, type }
+  var busy = false;     // analysis in flight
 
   /* ---------------- report render ---------------- */
   function renderReport() {
