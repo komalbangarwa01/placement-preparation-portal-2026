@@ -17,6 +17,7 @@
     <a href="#reason" class="nav-link" data-page="reason">Reasoning Practice</a>
     <a href="#test" class="nav-link" data-page="test">Aptitude Test</a>
     <a href="#resume" class="nav-link" data-page="resume">Resume Analysis</a>
+    <a href="#interview" class="nav-link" data-page="interview">Interview Practice</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -545,6 +546,140 @@
 </main>
 
 <footer class="foot">Built for placement season · data stored locally</footer>
+
+  <!-- ============ INTERVIEW PRACTICE MODULE ============ -->
+  <section id="page-interview" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Interview Practice Module</h2>
+        <small class="muted">Realistic recruiter-led mock interviews with per-answer scoring, recruiter reports and progress tracking.</small>
+      </div>
+    </div>
+
+    <!-- SETUP -->
+    <div id="ivSetup">
+      <div class="grid-2">
+        <div class="card setup">
+          <h3>Interview configuration</h3>
+          <label>Target role
+            <select id="ivRole">
+              <option>Frontend Developer</option>
+              <option>Backend Developer</option>
+              <option>Full Stack Developer</option>
+              <option>Software Engineer</option>
+              <option>Data Analyst</option>
+              <option>UI/UX Designer</option>
+              <option>QA Engineer</option>
+            </select>
+          </label>
+          <label>Interview type
+            <select id="ivType">
+              <option value="Mixed">Mixed Interview</option>
+              <option value="HR">HR Interview</option>
+              <option value="Technical">Technical Interview</option>
+              <option value="Behavioral">Behavioral Interview</option>
+              <option value="Situational">Situational Interview</option>
+            </select>
+          </label>
+          <label>Candidate level
+            <select id="ivLevel">
+              <option>Beginner</option>
+              <option selected>Intermediate</option>
+              <option>Advanced</option>
+              <option>Placement Ready</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="card setup">
+          <h3>Company pattern &amp; format</h3>
+          <label>Company-specific mode
+            <select id="ivCompany">
+              <option value="General">General campus panel</option>
+              <option>TCS</option>
+              <option>Infosys</option>
+              <option>Wipro</option>
+              <option>Accenture</option>
+              <option>Cognizant</option>
+              <option>Capgemini</option>
+              <option>Deloitte</option>
+            </select>
+          </label>
+          <label>Number of questions
+            <select id="ivCount">
+              <option>5</option>
+              <option selected>8</option>
+              <option>10</option>
+              <option>12</option>
+            </select>
+          </label>
+          <label>Interview duration
+            <select id="ivDuration">
+              <option value="15">15 minutes</option>
+              <option value="20" selected>20 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+            </select>
+          </label>
+          <div class="cta-row">
+            <button class="btn primary" id="ivStart">Start mock interview</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sec-title">Interview performance dashboard</h3>
+      <div class="stats">
+        <div class="card stat"><span>Interviews Taken</span><strong id="ivStatTotal">0</strong><small>stored locally</small></div>
+        <div class="card stat"><span>Average Score</span><strong id="ivStatAvg">0</strong><small>out of 100</small></div>
+        <div class="card stat"><span>Best Score</span><strong id="ivStatBest">0</strong><small>personal best</small></div>
+        <div class="card stat"><span>Improvement Trend</span><strong id="ivStatTrend">0</strong><small>last 3 vs previous 3</small></div>
+        <div class="card stat"><span>Latest Recommendation</span><strong id="ivStatRec">&mdash;</strong><small>recruiter verdict</small></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card chart-card"><h3>Progress trend</h3><div class="chart-wrap"><canvas id="chIvTrend"></canvas></div></div>
+        <div class="card">
+          <div class="page-head"><h3>Interview history</h3><button class="btn ghost sm" id="ivClearHistory">Clear history</button></div>
+          <ul class="activity" id="ivHistoryList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE INTERVIEW -->
+    <div id="ivRun" hidden>
+      <div class="quiz-top">
+        <div class="min-w"><h2 id="ivTitle">Mock Interview</h2><small id="ivSub"></small></div>
+        <div class="timer" id="ivTimer">20:00</div>
+      </div>
+      <div class="bar slim"><i id="ivBar"></i></div>
+      <small class="muted" id="ivProgress">Question 1 of 8</small>
+
+      <div class="card ivchat" id="ivChat"></div>
+
+      <div class="card ivcompose">
+        <textarea id="ivAnswer" rows="4" placeholder="Type your answer as you would speak it in the panel… (Ctrl + Enter to send)"></textarea>
+        <div class="cta-row">
+          <button class="btn primary" id="ivSend">Send answer</button>
+          <button class="btn ghost" id="ivSkip">Skip question</button>
+          <button class="btn ghost" id="ivEnd">End interview</button>
+        </div>
+        <p class="hint" id="ivStatus"></p>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div id="ivReport" hidden>
+      <div class="page-head">
+        <div class="min-w"><h2>Interview evaluation report</h2><small class="muted">Recruiter-style assessment with full transcript</small></div>
+        <div class="session-tools">
+          <button class="btn primary sm" id="ivDownload">Download report</button>
+          <button class="btn ghost sm" id="ivRetake">New interview</button>
+        </div>
+      </div>
+      <div id="ivReportBody"></div>
+    </div>
+  </section>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
@@ -554,5 +689,6 @@
 <script src="./reasoning.js"></script>
 <script src="./assessment.js"></script>
 <script src="./resume.js"></script>
+<script src="./interview.js"></script>
 </body>
 </html>
