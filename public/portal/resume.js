@@ -511,6 +511,71 @@
       sw.appendChild(d);
     });
     li($("cvTips"), r.review.optimizationTips);
+    renderRecruiter(r);
+  }
+
+  /* ---------------- recruiter intelligence ---------------- */
+  function bars(ul, rows) {
+    ul.innerHTML = "";
+    rows.forEach(function (x) {
+      var el = document.createElement("li");
+      el.innerHTML = "<span>" + esc(x[0]) + "</span><em><i style='width:" + x[1] + "%'></i></em><b>" + x[1] + "</b>";
+      ul.appendChild(el);
+    });
+  }
+  function pillClass(v) {
+    return v === "Strong" || v === "Eligible" ? "pill-ok" : v === "Positive" || v === "Borderline" ? "pill-mid" : "pill-bad";
+  }
+
+  function renderRecruiter(r) {
+    if (!window.PrepDeckRecruiter || !$("riCompanies")) return;
+    var intel = window.PrepDeckRecruiter.build(r.parsed, r.scores, r.role);
+    r.intel = intel;
+
+    var hr = intel.hr;
+    $("riHrScore").textContent = hr.overall;
+    var hv = $("riHrVerdict"); hv.textContent = hr.verdict; hv.className = "tag " + pillClass(hr.verdict);
+    bars($("riHrFactors"), hr.scores);
+    li($("riHrNotes"), hr.notes);
+    li($("riHrQuestions"), hr.questions);
+
+    var tc = intel.tech;
+    $("riTechScore").textContent = tc.overall;
+    $("riTechCall").textContent = tc.screenCall;
+    var tv = $("riTechVerdict"); tv.textContent = tc.verdict; tv.className = "tag " + pillClass(tc.verdict);
+    bars($("riTechFactors"), tc.scores);
+    li($("riTechNotes"), tc.notes);
+    li($("riTechProbes"), tc.probes);
+
+    var rk = intel.rank;
+    $("riRankScore").textContent = rk.composite;
+    $("riRankPct").textContent = rk.percentile;
+    $("riRankPos").textContent = "#" + rk.rank + " / " + rk.pool;
+    $("riRankShort").textContent = rk.shortlist + "%";
+    $("riRankBand").textContent = rk.band;
+    bars($("riRankFactors"), rk.factors.map(function (f) { return [f[0] + " (" + f[2] + "% weight)", f[1]]; }));
+
+    var el = intel.eligibility;
+    $("riCoEligible").textContent = el.filter(function (c) { return c.status === "Eligible"; }).length;
+    $("riCoBorder").textContent = el.filter(function (c) { return c.status === "Borderline"; }).length;
+    $("riCoBlocked").textContent = el.filter(function (c) { return c.status === "Not Eligible Yet"; }).length;
+    $("riCoBest").textContent = el.length ? el[0].name : "—";
+
+    var box = $("riCompanies"); box.innerHTML = "";
+    el.forEach(function (c) {
+      var d = document.createElement("div");
+      d.className = "cocard";
+      d.innerHTML =
+        "<header><h4>" + esc(c.name) + "</h4><span class='status " + pillClass(c.status) + "'>" + esc(c.status) + "</span></header>" +
+        "<small>" + esc(c.tier) + " · " + esc(c.process) + "</small>" +
+        "<div class='fitbar'><i style='width:" + c.fit + "%'></i></div>" +
+        "<small>Profile fit <b>" + c.fit + "</b> vs typical bar " + c.cutoff + " · skill coverage " + c.skillPct + "%</small>" +
+        "<small><b>Eligibility norm:</b> " + esc(c.cgpa) + "</small>" +
+        "<p>" + esc(c.insight) + "</p>" +
+        (c.missing.length ? "<small><b>Gaps:</b> " + c.missing.map(esc).join(", ") + "</small>" : "<small><b>Gaps:</b> none on the core stack</small>") +
+        "<small><b>Preparation plan</b></small><ul>" + c.prep.slice(0, 4).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
+      box.appendChild(d);
+    });
   }
 
   function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
