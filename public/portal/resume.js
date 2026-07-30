@@ -746,6 +746,39 @@
     });
     L.push(""); L.push("OPTIMIZATION TIPS");
     r.review.optimizationTips.forEach(function (x) { L.push(" - " + x); });
+
+    var intel = r.intel || (window.PrepDeckRecruiter && window.PrepDeckRecruiter.build(r.parsed, r.scores, r.role));
+    if (intel) {
+      L.push(""); L.push("HR REVIEW SIMULATION");
+      L.push("Score: " + intel.hr.overall + "/100 (" + intel.hr.verdict + ")");
+      intel.hr.scores.forEach(function (x) { L.push("   " + x[0] + ": " + x[1]); });
+      intel.hr.notes.forEach(function (x) { L.push(" - " + x); });
+      L.push("Likely HR questions:");
+      intel.hr.questions.forEach(function (x) { L.push("   * " + x); });
+
+      L.push(""); L.push("TECHNICAL RECRUITER FEEDBACK");
+      L.push("Score: " + intel.tech.overall + "/100 (" + intel.tech.verdict + ") — " + intel.tech.screenCall);
+      intel.tech.scores.forEach(function (x) { L.push("   " + x[0] + ": " + x[1]); });
+      intel.tech.notes.forEach(function (x) { L.push(" - " + x); });
+      L.push("Expected probes:");
+      intel.tech.probes.forEach(function (x) { L.push("   * " + x); });
+
+      L.push(""); L.push("RESUME RANKING");
+      L.push("Composite recruiter score: " + intel.rank.composite + "/100");
+      L.push("Applicant percentile: " + intel.rank.percentile + " (" + intel.rank.band + ")");
+      L.push("Estimated rank: #" + intel.rank.rank + " of " + intel.rank.pool + " applicants");
+      L.push("Shortlist probability: " + intel.rank.shortlist + "%");
+
+      L.push(""); L.push("COMPANY ELIGIBILITY ANALYSIS");
+      intel.eligibility.forEach(function (c) {
+        L.push("[" + c.status + "] " + c.name + " — fit " + c.fit + " / bar " + c.cutoff + " | skill coverage " + c.skillPct + "%");
+        L.push("   Process: " + c.process);
+        L.push("   Norm: " + c.cgpa);
+        L.push("   " + c.insight);
+        if (c.missing.length) L.push("   Gaps: " + c.missing.join(", "));
+        c.prep.slice(0, 4).forEach(function (x) { L.push("   Prep: " + x); });
+      });
+    }
     return L.join("\n");
   }
 
