@@ -154,13 +154,13 @@
     }
     add("Deep practice — " + weak[0], "Practice", weak[0], 0.28, "High",
       "30 questions at ≥70% accuracy",
-      "Lowest accuracy area in your practice history (" + (sig.categories[0] ? sig.categories[0].acc + "%" : "no data") + ").");
+      sig.categories[0] ? "Lowest accuracy area in your practice history (" + sig.categories[0].acc + "% accuracy)." : "No practice history yet — this is the standard starting block for placement aptitude.");
     add("Concept rebuild — " + (weak[1] || weak[0]), "Concept", weak[1] || weak[0], 0.18, "High",
       "Write your own 1-page method sheet",
       "Errors here look conceptual rather than careless, so revise the method before drilling volume.");
     add("Timed drill — speed under pressure", "Practice", weak[2] || weak[0], 0.16, "Medium",
       "20 questions under " + Math.max(35, 60 - Math.round(sig.accuracy / 4)) + "s each",
-      "Your average solve time is " + (sig.avgSeconds || "—") + "s; placement papers demand faster recall.");
+      (sig.avgSeconds ? "Your average solve time is " + sig.avgSeconds + "s; placement papers demand faster recall." : "Speed work from day one keeps pace with real placement papers."));
     add("Spaced revision — " + strong[0], "Revision", strong[0], 0.12, "Low",
       "15 mixed questions, no notes",
       "Maintenance pass so a strong area does not decay while you fix weak ones.");
