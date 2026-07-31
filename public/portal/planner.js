@@ -550,7 +550,7 @@
         datasets: [{ label: "Study hours", data: data, backgroundColor: "#5b7cfa", borderRadius: 6 }]
       },
       options: {
-        responsive: true, plugins: { legend: { display: false } },
+        responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
         scales: { y: { beginAtZero: true, suggestedMax: Math.max(2, store.goals.hours) } }
       }
     });
