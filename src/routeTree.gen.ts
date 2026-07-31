@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicResumeRouteImport } from './routes/api/public/resume'
 import { Route as ApiPublicQuestionsRouteImport } from './routes/api/public/questions'
+import { Route as ApiPublicPlanRouteImport } from './routes/api/public/plan'
 import { Route as ApiPublicInterviewRouteImport } from './routes/api/public/interview'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -35,6 +36,11 @@ const ApiPublicQuestionsRoute = ApiPublicQuestionsRouteImport.update({
   path: '/api/public/questions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPlanRoute = ApiPublicPlanRouteImport.update({
+  id: '/api/public/plan',
+  path: '/api/public/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicInterviewRoute = ApiPublicInterviewRouteImport.update({
   id: '/api/public/interview',
   path: '/api/public/interview',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/public/interview': typeof ApiPublicInterviewRoute
+  '/api/public/plan': typeof ApiPublicPlanRoute
   '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/api/public/resume': typeof ApiPublicResumeRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/public/interview': typeof ApiPublicInterviewRoute
+  '/api/public/plan': typeof ApiPublicPlanRoute
   '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/api/public/resume': typeof ApiPublicResumeRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/public/interview': typeof ApiPublicInterviewRoute
+  '/api/public/plan': typeof ApiPublicPlanRoute
   '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/api/public/resume': typeof ApiPublicResumeRoute
 }
@@ -69,6 +78,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/api/public/interview'
+    | '/api/public/plan'
     | '/api/public/questions'
     | '/api/public/resume'
   fileRoutesByTo: FileRoutesByTo
@@ -76,6 +86,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/api/public/interview'
+    | '/api/public/plan'
     | '/api/public/questions'
     | '/api/public/resume'
   id:
@@ -83,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/api/public/interview'
+    | '/api/public/plan'
     | '/api/public/questions'
     | '/api/public/resume'
   fileRoutesById: FileRoutesById
@@ -91,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiPublicInterviewRoute: typeof ApiPublicInterviewRoute
+  ApiPublicPlanRoute: typeof ApiPublicPlanRoute
   ApiPublicQuestionsRoute: typeof ApiPublicQuestionsRoute
   ApiPublicResumeRoute: typeof ApiPublicResumeRoute
 }
@@ -125,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicQuestionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/plan': {
+      id: '/api/public/plan'
+      path: '/api/public/plan'
+      fullPath: '/api/public/plan'
+      preLoaderRoute: typeof ApiPublicPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/interview': {
       id: '/api/public/interview'
       path: '/api/public/interview'
@@ -139,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiPublicInterviewRoute: ApiPublicInterviewRoute,
+  ApiPublicPlanRoute: ApiPublicPlanRoute,
   ApiPublicQuestionsRoute: ApiPublicQuestionsRoute,
   ApiPublicResumeRoute: ApiPublicResumeRoute,
 }

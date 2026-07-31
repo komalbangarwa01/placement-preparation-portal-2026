@@ -18,6 +18,7 @@
     <a href="#test" class="nav-link" data-page="test">Aptitude Test</a>
     <a href="#resume" class="nav-link" data-page="resume">Resume Analysis</a>
     <a href="#interview" class="nav-link" data-page="interview">Interview Practice</a>
+    <a href="#plan" class="nav-link" data-page="plan">Study Planner</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -721,6 +722,122 @@
     </div>
   </section>
 
+  <!-- STUDY PLANNER -->
+  <section id="page-plan" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Intelligent study planning system</h2>
+        <small class="muted">Personalised preparation programme built from your aptitude, reasoning, interview and resume performance</small>
+      </div>
+      <div class="session-tools">
+        <button class="btn primary sm" id="spGenerate">Generate plan</button>
+        <button class="btn ghost sm" id="spDownload">Download report</button>
+      </div>
+    </div>
+    <p class="hint" id="spStatus"></p>
+
+    <!-- READINESS BANNER -->
+    <div class="card sp-banner">
+      <div class="ring" id="spRing" style="--p:0"><span><strong id="spReadiness">0</strong><small>Placement readiness</small></span></div>
+      <div class="sp-banner-body">
+        <h3 id="spBand">Beginner</h3>
+        <p class="muted" id="spHeadline">Generate a plan to see your personalised preparation programme.</p>
+        <div class="sp-scores">
+          <div><small>Aptitude</small><div class="bar slim"><i id="spBarApt"></i></div><b id="spApt">0</b></div>
+          <div><small>Technical</small><div class="bar slim"><i id="spBarTech"></i></div><b id="spTech">0</b></div>
+          <div><small>Interview</small><div class="bar slim"><i id="spBarIv"></i></div><b id="spIv">0</b></div>
+          <div><small>Resume</small><div class="bar slim"><i id="spBarCv"></i></div><b id="spCv">0</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOALS -->
+    <div class="card sp-goals">
+      <h3>Goal management</h3>
+      <div class="sp-goal-grid">
+        <label>Target company<input id="spCompany" placeholder="e.g. Infosys" /></label>
+        <label>Target role
+          <select id="spRole">
+            <option>Software Engineer</option><option>Frontend Developer</option><option>Backend Developer</option>
+            <option>Full Stack Developer</option><option>Data Analyst</option><option>UI/UX Designer</option>
+          </select>
+        </label>
+        <label>Target placement date<input id="spDate" type="date" /></label>
+        <label>Study hours per day<input id="spHours" type="number" min="1" max="14" step="0.5" value="3" /></label>
+        <label>Weekly goal (questions)<input id="spWeekGoal" type="number" min="10" max="2000" step="10" value="150" /></label>
+        <label>Daily goal (questions)<input id="spDayGoal" type="number" min="5" max="300" step="5" value="25" /></label>
+      </div>
+      <div class="cta-row">
+        <button class="btn primary sm" id="spSaveGoals">Save goals</button>
+        <span class="pill" id="spCountdown">—</span>
+      </div>
+    </div>
+
+    <!-- OVERVIEW METRICS -->
+    <div class="stat-grid" id="spMetrics"></div>
+
+    <!-- TODAY -->
+    <div class="sp-cols">
+      <div class="card">
+        <div class="page-head tight">
+          <div class="min-w"><h3>Today's plan</h3><small class="muted" id="spTodayMeta">—</small></div>
+          <span class="pill" id="spTodayPct">0%</span>
+        </div>
+        <div class="bar slim"><i id="spTodayBar"></i></div>
+        <ul class="sp-tasks" id="spTasks"></ul>
+      </div>
+      <div class="card">
+        <h3>Smart recommendations</h3>
+        <div id="spRecs"></div>
+      </div>
+    </div>
+
+    <!-- GAP ANALYSIS -->
+    <div class="card">
+      <h3>Intelligent skill gap analysis</h3>
+      <div class="sp-grid3" id="spGaps"></div>
+    </div>
+
+    <!-- WEEKLY -->
+    <div class="sp-cols">
+      <div class="card">
+        <h3>Weekly learning roadmap</h3>
+        <div id="spWeekly"></div>
+      </div>
+      <div class="card">
+        <h3>Productivity analytics</h3>
+        <div class="chart-wrap"><canvas id="spHoursChart"></canvas></div>
+        <ul class="sp-mini" id="spProductivity"></ul>
+      </div>
+    </div>
+
+    <!-- MONTHLY -->
+    <div class="card">
+      <h3>Monthly placement strategy</h3>
+      <div id="spMonthly"></div>
+    </div>
+
+    <!-- ADAPTIVE + REPORTS -->
+    <div class="sp-cols">
+      <div class="card">
+        <h3>Adaptive learning engine</h3>
+        <ul class="sp-mini" id="spAdaptive"></ul>
+      </div>
+      <div class="card">
+        <div class="page-head tight">
+          <div class="min-w"><h3>Study reports</h3><small class="muted">Generated from your tracked activity</small></div>
+          <div class="seg" id="spReportSeg">
+            <button class="on" data-report="daily">Daily</button>
+            <button data-report="weekly">Weekly</button>
+            <button data-report="monthly">Monthly</button>
+            <button data-report="placement">Placement</button>
+          </div>
+        </div>
+        <pre class="sp-report" id="spReport"></pre>
+      </div>
+    </div>
+  </section>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
@@ -732,5 +849,6 @@
 <script src="./recruiter.js"></script>
 <script src="./resume.js"></script>
 <script src="./interview.js"></script>
+<script src="./planner.js"></script>
 </body>
 </html>
