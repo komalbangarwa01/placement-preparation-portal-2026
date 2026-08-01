@@ -304,7 +304,7 @@
           labels: fits.map(function (f) { return f.track.name; }),
           datasets: [{
             label: "Company fit %", data: fits.map(function (f) { return f.fit; }),
-            backgroundColor: "rgba(91,124,250,.22)", borderColor: "#5b7cfa", pointBackgroundColor: "#5b7cfa"
+            backgroundColor: "rgba(255,90,60,.22)", borderColor: "#ff5a3c", pointBackgroundColor: "#ff5a3c"
           }]
         },
         options: {
