@@ -19,6 +19,7 @@
     <a href="#resume" class="nav-link" data-page="resume">Resume Analysis</a>
     <a href="#interview" class="nav-link" data-page="interview">Interview Practice</a>
     <a href="#plan" class="nav-link" data-page="plan">Study Planner</a>
+    <a href="#career" class="nav-link" data-page="career">Career Intelligence</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -838,6 +839,55 @@
     </div>
   </section>
 
+  <!-- CAREER INTELLIGENCE -->
+  <section id="page-career" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Career intelligence</h2>
+        <small class="muted">Company-specific preparation tracks and a predictive career success dashboard built from your own performance data</small>
+      </div>
+      <div class="session-tools">
+        <button class="btn primary sm" id="crRefresh">Refresh analysis</button>
+        <button class="btn ghost sm" id="crDownload">Download report</button>
+      </div>
+    </div>
+
+    <div class="card sp-banner">
+      <div class="ring" id="crRing" style="--p:0"><span><strong id="crProb">0</strong><small>Placement probability</small></span></div>
+      <div class="sp-banner-body">
+        <h3 id="crBand">Beginner</h3>
+        <p class="muted" id="crBandNote">Complete practice sessions to unlock accurate predictions.</p>
+      </div>
+    </div>
+
+    <div class="stat-grid" id="crMetrics"></div>
+
+    <div class="sp-cols">
+      <div class="card">
+        <h3>Company fit profile</h3>
+        <div class="chart-wrap"><canvas id="crRadar"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Personalised improvement roadmap</h3>
+        <div class="sp-phases" id="crRoadmap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Company-specific preparation tracks</h3>
+      <div class="cr-tracks" id="crTracks"></div>
+    </div>
+
+    <div class="card">
+      <div class="page-head tight">
+        <div class="min-w"><h3 id="crTrackTitle">Preparation track</h3><small class="muted" id="crTrackTag"></small></div>
+        <span class="pill" id="crTrackFit">—</span>
+      </div>
+      <div class="cr-bench-grid" id="crBenchmarks"></div>
+      <div id="crTrackBody"></div>
+    </div>
+  </section>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
@@ -850,5 +900,6 @@
 <script src="./resume.js"></script>
 <script src="./interview.js"></script>
 <script src="./planner.js"></script>
+<script src="./career.js"></script>
 </body>
 </html>
