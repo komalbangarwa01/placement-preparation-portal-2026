@@ -23,7 +23,7 @@
 
   /* ---------- routing ---------- */
   function show(page) {
-    ["home", "dashboard", "practice", "test", "reason", "resume", "interview", "plan"].forEach(function (p) {
+    ["home", "dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career"].forEach(function (p) {
       $("page-" + p).classList.toggle("active", p === page);
     });
     document.querySelectorAll(".nav-link").forEach(function (a) {
@@ -36,6 +36,7 @@
     if (page === "resume" && window.PrepDeckResume) window.PrepDeckResume.render();
     if (page === "interview" && window.PrepDeckInterview) window.PrepDeckInterview.render();
     if (page === "plan" && window.PrepDeckPlanner) window.PrepDeckPlanner.render();
+    if (page === "career" && window.PrepDeckCareer) window.PrepDeckCareer.render();
   }
   document.querySelectorAll("[data-page]").forEach(function (el) {
     el.addEventListener("click", function (e) { e.preventDefault(); show(el.dataset.page); });
