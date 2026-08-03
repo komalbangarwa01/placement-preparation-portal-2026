@@ -6,6 +6,7 @@
 <title>PrepDeck — Placement Preparation Portal</title>
 <meta name="description" content="Track placement test scores, strong and weak topics, and recent practice activity in one modern dashboard." />
 <link rel="stylesheet" href="./style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" />
 </head>
 <body>
 <nav class="nav">
@@ -20,6 +21,8 @@
     <a href="#interview" class="nav-link" data-page="interview">Interview Practice</a>
     <a href="#plan" class="nav-link" data-page="plan">Study Planner</a>
     <a href="#career" class="nav-link" data-page="career">Career Intelligence</a>
+    <a href="#code" class="nav-link" data-page="code">Coding Practice</a>
+    <a href="#code" class="nav-link" data-page="code">Coding Practice</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -888,10 +891,174 @@
     </div>
   </section>
 
+  <!-- CODING PRACTICE -->
+  <section id="page-code" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Coding practice platform</h2>
+        <small class="muted">A curated library of <b id="cdBankCount">500</b>+ challenges across 12 data-structure and algorithm tracks, with an in-browser editor and recruiter-grade analytics</small>
+      </div>
+      <div class="session-tools">
+        <button class="btn ghost sm" id="cdTabLibrary">Library</button>
+        <button class="btn ghost sm" id="cdTabAnalytics">Analytics</button>
+        <button class="btn ghost sm" id="cdTabCompany">Company prep</button>
+      </div>
+    </div>
+
+    <div class="stat-grid" id="cdMetrics"></div>
+
+    <!-- LIBRARY VIEW -->
+    <div id="cdViewLibrary">
+      <div class="card">
+        <div class="cd-filters">
+          <label>Topic
+            <select id="cdTopic"><option value="">All topics</option></select>
+          </label>
+          <label>Difficulty
+            <select id="cdDiff">
+              <option value="">All levels</option>
+              <option>Easy</option><option>Medium</option><option>Hard</option>
+            </select>
+          </label>
+          <label>Company
+            <select id="cdCompany"><option value="">All companies</option></select>
+          </label>
+          <label>Status
+            <select id="cdStatus">
+              <option value="">All problems</option>
+              <option value="solved">Solved</option>
+              <option value="attempted">Attempted</option>
+              <option value="todo">Not started</option>
+              <option value="bookmark">Bookmarked</option>
+              <option value="revision">Marked for revision</option>
+            </select>
+          </label>
+          <label class="grow">Search
+            <input id="cdSearch" type="search" placeholder="Search by problem title…" />
+          </label>
+        </div>
+        <div class="cd-listhead">
+          <span id="cdCount" class="muted">—</span>
+          <button class="btn ghost sm" id="cdRandom">Pick a random problem</button>
+        </div>
+        <div class="cd-list" id="cdList"></div>
+        <div class="cd-pager">
+          <button class="btn ghost sm" id="cdPrevPage">Previous</button>
+          <span class="muted" id="cdPageInfo">Page 1</span>
+          <button class="btn ghost sm" id="cdNextPage">Next</button>
+        </div>
+      </div>
+
+      <div class="card" id="cdWorkspace" hidden>
+        <div class="cd-workspace">
+          <div class="cd-desc">
+            <div class="page-head tight">
+              <div class="min-w">
+                <h3 id="cdTitle">Problem</h3>
+                <small class="muted" id="cdMeta"></small>
+              </div>
+              <div class="session-tools">
+                <button class="btn ghost sm" id="cdBookmark">☆ Bookmark</button>
+                <button class="btn ghost sm" id="cdRevision">Mark for revision</button>
+              </div>
+            </div>
+            <div id="cdStatement" class="cd-block"></div>
+            <h4>Constraints</h4>
+            <ul class="cd-constraints" id="cdConstraints"></ul>
+            <div class="cd-io">
+              <div><h4>Sample input</h4><pre id="cdSampleIn"></pre></div>
+              <div><h4>Sample output</h4><pre id="cdSampleOut"></pre></div>
+            </div>
+            <h4>Explanation</h4>
+            <p class="muted" id="cdExplain"></p>
+            <h4>Test cases</h4>
+            <div class="cd-tests" id="cdTests"></div>
+          </div>
+
+          <div class="cd-editor-pane" id="cdEditorPane">
+            <div class="cd-editor-bar">
+              <select id="cdLang">
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="cpp">C++</option>
+              </select>
+              <span class="muted sm" id="cdSaveHint">Auto-save on</span>
+              <span class="spacer"></span>
+              <button class="btn ghost sm" id="cdReset">Reset code</button>
+              <button class="btn ghost sm" id="cdFull">Full screen</button>
+            </div>
+            <div class="cd-code">
+              <pre aria-hidden="true"><code id="cdHighlight" class="language-javascript"></code></pre>
+              <textarea id="cdCode" spellcheck="false" wrap="off"></textarea>
+            </div>
+            <div class="cd-run">
+              <button class="btn primary sm" id="cdRun">Run sample test</button>
+              <button class="btn sm" id="cdSolved">Mark as solved</button>
+              <button class="btn ghost sm" id="cdFailed">Mark as attempted</button>
+            </div>
+            <div class="cd-console" id="cdConsole">Run your solution to see the output here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS VIEW -->
+    <div id="cdViewAnalytics" hidden>
+      <div class="card sp-banner">
+        <div class="ring" id="cdRing" style="--p:0"><span><strong id="cdReady">0</strong><small>Coding readiness</small></span></div>
+        <div class="sp-banner-body">
+          <h3 id="cdBand">Beginner</h3>
+          <p class="muted" id="cdBandNote">Solve problems across topics to build your coding readiness profile.</p>
+          <div class="cd-score-row" id="cdScores"></div>
+        </div>
+      </div>
+
+      <div class="sp-cols">
+        <div class="card"><h3>Topic-wise performance</h3><div class="chart-wrap"><canvas id="cdTopicChart"></canvas></div></div>
+        <div class="card"><h3>Difficulty-wise performance</h3><div class="chart-wrap"><canvas id="cdDiffChart"></canvas></div></div>
+      </div>
+
+      <div class="sp-cols">
+        <div class="card"><h3>Weekly progress</h3><div class="chart-wrap"><canvas id="cdWeekChart"></canvas></div></div>
+        <div class="card"><h3>Monthly progress</h3><div class="chart-wrap"><canvas id="cdMonthChart"></canvas></div></div>
+      </div>
+
+      <div class="sp-cols">
+        <div class="card"><h3>Strong topics</h3><div id="cdStrong"></div></div>
+        <div class="card"><h3>Weak topics &amp; skill gaps</h3><div id="cdWeak"></div></div>
+      </div>
+
+      <div class="card">
+        <div class="page-head tight">
+          <div class="min-w"><h3>Personalised recommendations</h3><small class="muted">Next problems, revision topics and your suggested learning path</small></div>
+          <button class="btn ghost sm" id="cdDownload">Download report</button>
+        </div>
+        <div id="cdRecommend"></div>
+      </div>
+    </div>
+
+    <!-- COMPANY VIEW -->
+    <div id="cdViewCompany" hidden>
+      <div class="card">
+        <h3>Company-based coding preparation</h3>
+        <div class="cr-tracks" id="cdCompanyTracks"></div>
+      </div>
+      <div class="card" id="cdCompanyPanel"></div>
+    </div>
+  </section>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
 <script src="./reasoning-bank.js"></script>
 <script src="./script.js"></script>
 <script src="./reasoning.js"></script>
@@ -901,5 +1068,7 @@
 <script src="./interview.js"></script>
 <script src="./planner.js"></script>
 <script src="./career.js"></script>
+<script src="./coding-bank.js"></script>
+<script src="./coding.js"></script>
 </body>
 </html>
