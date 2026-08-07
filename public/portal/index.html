@@ -22,7 +22,6 @@
     <a href="#plan" class="nav-link" data-page="plan">Study Planner</a>
     <a href="#career" class="nav-link" data-page="career">Career Intelligence</a>
     <a href="#code" class="nav-link" data-page="code">Coding Practice</a>
-    <a href="#code" class="nav-link" data-page="code">Coding Practice</a>
     <a href="#practice" class="nav-link" data-page="practice">Log Test</a>
     <button id="themeBtn" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -256,31 +255,117 @@
   <!-- DASHBOARD -->
   <section id="page-dashboard" class="page">
     <div class="page-head">
-      <h2>Dashboard</h2>
-      <button class="btn ghost sm" id="resetBtn">Reset data</button>
+      <div class="min-w">
+        <h2 id="dbWelcome">Welcome back</h2>
+        <small class="muted" id="dbWelcomeNote">Your personalised placement command centre, updated after every practice session.</small>
+      </div>
+      <div class="session-tools">
+        <button class="btn primary sm" id="dbRefresh">Refresh</button>
+        <button class="btn ghost sm" id="resetBtn">Reset data</button>
+      </div>
     </div>
 
-    <div class="stats">
-      <div class="card stat"><span>Total Tests Attempted</span><strong id="statTotal">0</strong></div>
-      <div class="card stat"><span>Average Score</span><strong id="statAvg">0%</strong></div>
-      <div class="card stat"><span>Best Score</span><strong id="statBest">0%</strong></div>
-      <div class="card stat"><span>Topics Covered</span><strong id="statTopics">0</strong></div>
+    <!-- readiness banner -->
+    <div class="card sp-banner db-banner">
+      <div class="ring" id="dbRing" style="--p:0"><span><strong id="dbReadiness">0</strong><small>Placement readiness</small></span></div>
+      <div class="sp-banner-body">
+        <h3><span id="dbBand">Beginner</span> <span class="pill" id="dbProgressPill">0% overall progress</span></h3>
+        <p class="muted" id="dbBandNote">Start a practice session to build your readiness profile.</p>
+        <div class="bar slim"><i id="dbProgressBar" style="width:0"></i></div>
+        <div class="db-banner-meta" id="dbBannerMeta"></div>
+      </div>
     </div>
 
-    <div class="grid-2">
+    <!-- quick actions -->
+    <div class="db-actions" id="dbActions"></div>
+
+    <!-- headline metrics -->
+    <div class="stat-grid">
+      <div class="stat"><span>Daily study streak</span><strong id="dbStreak">0</strong></div>
+      <div class="stat"><span>Total practice hours</span><strong id="dbHours">0</strong></div>
+      <div class="stat"><span>Total tests attempted</span><strong id="statTotal">0</strong></div>
+      <div class="stat"><span>Average accuracy</span><strong id="dbAccuracy">0%</strong></div>
+      <div class="stat"><span>Interview readiness</span><strong id="dbInterviewScore">0</strong></div>
+      <div class="stat"><span>Average test score</span><strong id="statAvg">0%</strong></div>
+      <div class="stat"><span>Best score</span><strong id="statBest">0%</strong></div>
+      <div class="stat"><span>Topics covered</span><strong id="statTopics">0</strong></div>
+    </div>
+
+    <!-- module scores -->
+    <div class="card">
+      <h3>Quick statistics <small>module-wise scores out of 100</small></h3>
+      <div class="db-modules" id="dbModules"></div>
+    </div>
+
+    <!-- readiness centre -->
+    <div class="card">
+      <h3>Placement readiness centre <small>levels: Beginner · Intermediate · Advanced · Placement Ready</small></h3>
+      <div class="db-readiness" id="dbReadinessGrid"></div>
+    </div>
+
+    <!-- performance summary -->
+    <div class="db-cols-3">
       <div class="card">
-        <h3>Strong Topics <small>≥ 70%</small></h3>
+        <h3>Strong areas <small>≥ 70%</small></h3>
         <ul class="topics" id="strongList"></ul>
       </div>
       <div class="card">
-        <h3>Weak Topics <small>&lt; 70%</small></h3>
+        <h3>Areas requiring improvement <small>&lt; 70%</small></h3>
         <ul class="topics weak" id="weakList"></ul>
+      </div>
+      <div class="card">
+        <h3>Recent achievements</h3>
+        <ul class="db-list" id="dbAchievements"></ul>
       </div>
     </div>
 
     <div class="card">
-      <h3>Recent Activity</h3>
-      <ul class="activity" id="activityList"></ul>
+      <h3>Learning progress</h3>
+      <div class="db-progress" id="dbLearning"></div>
+    </div>
+
+    <!-- analytics -->
+    <div class="page-head tight"><h3>Analytics</h3></div>
+    <div class="db-charts">
+      <div class="card chart-card"><h3>Weekly performance trend <small>last 7 days</small></h3><div class="chart-wrap"><canvas id="dbChWeek"></canvas></div></div>
+      <div class="card chart-card"><h3>Monthly performance trend <small>last 6 months</small></h3><div class="chart-wrap"><canvas id="dbChMonth"></canvas></div></div>
+      <div class="card chart-card"><h3>Topic-wise accuracy</h3><div class="chart-wrap"><canvas id="dbChTopics"></canvas></div></div>
+      <div class="card chart-card"><h3>Skill development graph</h3><div class="chart-wrap"><canvas id="dbChSkills"></canvas></div></div>
+      <div class="card chart-card"><h3>Practice consistency <small>questions per day, last 14 days</small></h3><div class="chart-wrap"><canvas id="dbChConsistency"></canvas></div></div>
+      <div class="card chart-card"><h3>Performance heatmap <small>last 12 weeks</small></h3><div class="db-heat" id="dbHeat"></div></div>
+    </div>
+
+    <!-- recommendations + goals -->
+    <div class="grid-2">
+      <div class="card">
+        <h3>Personalised recommendations</h3>
+        <div class="db-recos" id="dbRecos"></div>
+      </div>
+      <div class="card">
+        <h3>Goal tracking</h3>
+        <form class="db-goal-form" id="dbGoalForm">
+          <label>Target company<input id="dbGoalCompany" placeholder="e.g. Infosys" /></label>
+          <label>Target placement date<input id="dbGoalDate" type="date" /></label>
+          <label>Weekly goal (questions)<input id="dbGoalWeek" type="number" min="10" max="2000" /></label>
+          <label>Daily goal (questions)<input id="dbGoalDay" type="number" min="5" max="400" /></label>
+          <button class="btn primary sm" type="submit">Save goals</button>
+        </form>
+        <div class="db-goal-track" id="dbGoalTrack"></div>
+      </div>
+    </div>
+
+    <!-- insights + timeline -->
+    <div class="grid-2">
+      <div class="card">
+        <h3>Smart insights</h3>
+        <ul class="db-list" id="dbInsights"></ul>
+      </div>
+      <div class="card">
+        <h3>Activity timeline</h3>
+        <div class="db-tl-filters" id="dbTlFilters"></div>
+        <ul class="activity" id="activityList" hidden></ul>
+        <ul class="activity" id="dbTimeline"></ul>
+      </div>
     </div>
   </section>
 
@@ -1070,5 +1155,6 @@
 <script src="./career.js"></script>
 <script src="./coding-bank.js"></script>
 <script src="./coding.js"></script>
+<script src="./dashboard.js"></script>
 </body>
 </html>

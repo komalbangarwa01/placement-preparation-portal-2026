@@ -31,7 +31,7 @@
     });
     $("navLinks").classList.remove("open");
     window.scrollTo({ top: 0, behavior: "smooth" });
-    if (page === "dashboard") render();
+    if (page === "dashboard") { render(); if (window.PrepDeckDashboard) window.PrepDeckDashboard.render(); }
     if (page === "reason" && window.PrepDeckReasoning) window.PrepDeckReasoning.render();
     if (page === "resume" && window.PrepDeckResume) window.PrepDeckResume.render();
     if (page === "interview" && window.PrepDeckInterview) window.PrepDeckInterview.render();
@@ -338,10 +338,11 @@
     ]);
   }
   window.PrepDeck = {
-    logAttempt: function (a) { var l = load(); l.push(a); save(l); render(); },
-    render: render
+    logAttempt: function (a) { var l = load(); l.push(a); save(l); render(); if (window.PrepDeckDashboard) window.PrepDeckDashboard.render(); },
+    render: render,
+    go: show
   };
   render();
   var h = (location.hash || "").slice(1);
-  show(["dashboard", "practice", "test", "reason", "resume", "interview", "plan"].indexOf(h) > -1 ? h : "home");
+  show(["dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career", "code"].indexOf(h) > -1 ? h : "home");
 })();
