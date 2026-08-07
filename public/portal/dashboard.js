@@ -281,7 +281,7 @@
       : "Set a target company and date in goal tracking to sharpen your recommendations.";
 
     $("dbReadiness").textContent = s.readiness;
-    $("dbRing").style.setProperty("--p", s.readiness);
+    $("dbRing").style.setProperty("--p", s.readiness + "%");
     $("dbBand").textContent = band(s.readiness);
     $("dbProgressPill").textContent = s.overall + "% overall progress";
     $("dbProgressBar").style.width = s.overall + "%";
