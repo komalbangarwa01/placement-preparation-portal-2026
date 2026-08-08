@@ -1133,6 +1133,79 @@
     </div>
   </section>
 
+  <!-- ================= LEADERBOARD & RANKING ================= -->
+  <section id="page-rank" class="page">
+    <div class="page-head">
+      <div class="min-w">
+        <h2>Leaderboard &amp; Ranking Centre</h2>
+        <small class="muted">Competitive benchmarking against the candidate cohort, updated after every practice session.</small>
+      </div>
+      <div class="session-tools">
+        <button class="btn primary sm" id="lbRefresh">Refresh rankings</button>
+        <button class="btn ghost sm" id="lbDownload">Download report</button>
+      </div>
+    </div>
+
+    <!-- profile ranking card -->
+    <div class="card sp-banner lb-banner">
+      <div class="ring" id="lbRing" style="--p:0"><span><strong id="lbRankNum">—</strong><small>Current rank</small></span></div>
+      <div class="sp-banner-body">
+        <h3><span id="lbTitle">Rising Star</span> <span class="pill" id="lbBandPill">Beginner</span></h3>
+        <p class="muted" id="lbTitleNote">Practice consistently to climb the cohort leaderboard.</p>
+        <div class="db-banner-meta" id="lbProfileMeta"></div>
+        <div class="lb-badges" id="lbBadges"></div>
+      </div>
+    </div>
+
+    <!-- progress to next rank -->
+    <div class="card">
+      <div class="page-head tight">
+        <div class="min-w"><h3>Progress to next rank</h3><small class="muted" id="lbNextNote">Earn points through accuracy, consistency and completion.</small></div>
+        <span class="pill" id="lbPointsPill">0 pts</span>
+      </div>
+      <div class="bar slim"><i id="lbNextBar" style="width:0"></i></div>
+      <div class="lb-next-grid" id="lbNextGrid"></div>
+      <div id="lbSuggestions"></div>
+    </div>
+
+    <!-- leaderboards -->
+    <div class="card">
+      <div class="page-head tight">
+        <div class="min-w"><h3>Rankings</h3><small class="muted">Category-wise and time-based leaderboards</small></div>
+      </div>
+      <div class="lb-tabs" id="lbCatTabs"></div>
+      <div class="lb-tabs sub" id="lbPeriodTabs"></div>
+      <div class="lb-table-wrap">
+        <table class="lb-table">
+          <thead>
+            <tr><th>Rank</th><th>Candidate</th><th>Total score</th><th>Accuracy</th><th>Readiness</th><th>Tests</th><th>Change</th></tr>
+          </thead>
+          <tbody id="lbRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sp-cols">
+      <div class="card"><h3>Rank trend</h3><div class="chart-wrap"><canvas id="lbRankChart"></canvas></div></div>
+      <div class="card"><h3>Performance comparison</h3><div class="chart-wrap"><canvas id="lbCompareChart"></canvas></div></div>
+    </div>
+
+    <div class="sp-cols">
+      <div class="card"><h3>Placement benchmarking</h3><div id="lbBenchmarks"></div></div>
+      <div class="card"><h3>Competitor comparison</h3><div id="lbCompetitors"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Hall of Fame</h3>
+      <div class="lb-fame" id="lbFame"></div>
+    </div>
+
+    <div class="card">
+      <h3>Achievement showcase</h3>
+      <div class="lb-ach" id="lbAchievements"></div>
+    </div>
+  </section>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
@@ -1156,5 +1229,6 @@
 <script src="./coding-bank.js"></script>
 <script src="./coding.js"></script>
 <script src="./dashboard.js"></script>
+<script src="./leaderboard.js"></script>
 </body>
 </html>
