@@ -592,3 +592,80 @@ main { max-width: 1100px; margin: 0 auto; padding: clamp(1.2rem, 4vw, 2.6rem); }
   .db-goal-form { grid-template-columns: 1fr; }
   .db-actions { grid-template-columns: 1fr 1fr; }
 }
+
+/* ================= LEADERBOARD & RANKING ================= */
+.lb-banner .ring strong { font-size: 1.35rem; }
+.lb-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+.lb-badge {
+  font-size: .78rem; padding: .3rem .6rem; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); background: var(--surface);
+  opacity: .6; transition: transform .18s ease, opacity .18s ease;
+}
+.lb-badge.on {
+  opacity: 1; color: var(--text); border-color: color-mix(in oklab, var(--brand) 45%, transparent);
+  background: color-mix(in oklab, var(--brand) 12%, transparent);
+}
+.lb-badge:hover { transform: translateY(-2px); }
+
+.lb-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: .6rem 0; }
+.lb-tab {
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  padding: .42rem .8rem; border-radius: 999px; font-size: .84rem; cursor: pointer;
+  transition: all .18s ease;
+}
+.lb-tab:hover { transform: translateY(-1px); color: var(--text); }
+.lb-tab.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.lb-tabs.sub .lb-tab { font-size: .78rem; padding: .32rem .68rem; }
+
+.lb-table-wrap { overflow-x: auto; margin-top: .5rem; }
+.lb-table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: .88rem; }
+.lb-table th {
+  text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); padding: .55rem .6rem; border-bottom: 1px solid var(--line);
+}
+.lb-table td { padding: .6rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.lb-table tbody tr { transition: background .18s ease; }
+.lb-table tbody tr:hover { background: color-mix(in oklab, var(--brand) 6%, transparent); }
+.lb-table tr.you { background: color-mix(in oklab, var(--brand) 12%, transparent); }
+.lb-name { display: block; font-weight: 600; }
+.lb-table small { display: block; font-size: .72rem; }
+.lb-table td.up { color: var(--ok); }
+.lb-table td.down { color: var(--warn, #dc2626); }
+.lb-table td.flat { color: var(--muted); }
+
+.lb-next-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: .8rem 0; }
+.lb-list { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--muted); font-size: .88rem; }
+.lb-list li { margin: .25rem 0; }
+
+.lb-bench { margin-bottom: .9rem; }
+.lb-bench-head { display: flex; justify-content: space-between; font-size: .86rem; margin-bottom: .3rem; }
+
+.lb-comp {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  padding: .6rem 0; border-bottom: 1px solid var(--line);
+}
+.lb-comp:last-child { border-bottom: 0; }
+.lb-comp small { display: block; font-size: .74rem; }
+
+.lb-fame { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; }
+.lb-fame-card { border: 1px solid var(--line); border-radius: var(--r); padding: .8rem; background: var(--surface); }
+.lb-fame-card h4 { margin: 0 0 .5rem; font-size: .9rem; }
+.lb-fame-card ol { margin: 0; padding-left: 1.1rem; font-size: .84rem; }
+.lb-fame-card li { display: flex; justify-content: space-between; gap: .5rem; margin: .28rem 0; }
+
+.lb-ach { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: .7rem; }
+.lb-ach-card {
+  display: flex; align-items: center; gap: .6rem; padding: .7rem;
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
+  opacity: .72; transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+.lb-ach-card.on { opacity: 1; border-color: color-mix(in oklab, var(--brand) 40%, transparent); }
+.lb-ach-card:hover { transform: translateY(-2px); box-shadow: var(--sh, 0 6px 20px rgba(0,0,0,.08)); }
+.lb-ach-card > div { flex: 1; min-width: 0; }
+.lb-ach-card small { display: block; font-size: .74rem; }
+.lb-ach-icon { font-size: 1.5rem; }
+
+@media (max-width: 640px) {
+  .lb-table { min-width: 560px; }
+  .lb-fame, .lb-ach { grid-template-columns: 1fr; }
+}
