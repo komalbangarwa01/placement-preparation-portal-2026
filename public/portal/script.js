@@ -23,7 +23,7 @@
 
   /* ---------- routing ---------- */
   function show(page) {
-    ["home", "dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career", "code"].forEach(function (p) {
+    ["home", "dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career", "code", "rank"].forEach(function (p) {
       $("page-" + p).classList.toggle("active", p === page);
     });
     document.querySelectorAll(".nav-link").forEach(function (a) {
@@ -38,6 +38,7 @@
     if (page === "plan" && window.PrepDeckPlanner) window.PrepDeckPlanner.render();
     if (page === "career" && window.PrepDeckCareer) window.PrepDeckCareer.render();
     if (page === "code" && window.PrepDeckCoding) window.PrepDeckCoding.render();
+    if (page === "rank" && window.PrepDeckRank) window.PrepDeckRank.render();
   }
   document.querySelectorAll("[data-page]").forEach(function (el) {
     el.addEventListener("click", function (e) { e.preventDefault(); show(el.dataset.page); });
@@ -344,5 +345,5 @@
   };
   render();
   var h = (location.hash || "").slice(1);
-  show(["dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career", "code"].indexOf(h) > -1 ? h : "home");
+  show(["dashboard", "practice", "test", "reason", "resume", "interview", "plan", "career", "code", "rank"].indexOf(h) > -1 ? h : "home");
 })();
