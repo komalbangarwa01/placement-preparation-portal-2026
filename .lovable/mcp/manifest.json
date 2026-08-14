@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.2",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "placement-pal",
+      "version": "0.1.0",
+      "title": "Placement Pal"
+    },
+    "tools": [
+      {
+        "name": "generate_aptitude_questions",
+        "title": "Generate aptitude questions",
+        "description": "Generate fresh multiple-choice campus placement aptitude or reasoning questions with answers and step-by-step explanations.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "enum": [
+                "Logical Reasoning",
+                "Verbal Reasoning",
+                "Quantitative Aptitude",
+                "Data Interpretation",
+                "Puzzles & Seating Arrangement",
+                "Coding-Decoding",
+                "Blood Relations",
+                "Series & Patterns"
+              ],
+              "description": "Question category."
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "Easy",
+                "Medium",
+                "Hard"
+              ],
+              "description": "Difficulty level."
+            },
+            "count": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991,
+              "description": "How many questions to generate (1-10)."
+            }
+          },
+          "required": [
+            "category",
+            "difficulty",
+            "count"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "review_resume",
+        "title": "Review a resume",
+        "description": "Run a recruiter-grade review of resume text for a target campus placement role: strengths, red flags, section feedback and improvement actions.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "Plain resume text to review."
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "Frontend Developer",
+                "Backend Developer",
+                "Full Stack Developer",
+                "Data Analyst",
+                "Software Engineer",
+                "UI/UX Designer"
+              ],
+              "description": "Target role for the review."
+            },
+            "jobDescription": {
+              "description": "Optional target job description to match against.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "text",
+            "role"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "generate_study_plan",
+        "title": "Generate a study plan",
+        "description": "Build an individualised daily, weekly and monthly placement preparation plan from a candidate's weak areas, scores and available study hours.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "weakAreas": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Topics the candidate struggles with."
+            },
+            "strongAreas": {
+              "description": "Topics the candidate is already good at.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "averageAccuracy": {
+              "description": "Overall practice accuracy percentage, 0-100.",
+              "type": "number"
+            },
+            "hoursPerDay": {
+              "type": "number",
+              "description": "Study hours available per day (1-14)."
+            },
+            "targetCompany": {
+              "description": "Target company or role, if any.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "weakAreas",
+            "hoursPerDay"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_company_prep_track",
+        "title": "Get company preparation track",
+        "description": "Return the preparation track for a top recruiter: score cutoffs, focus areas, a four-week strategy and interview roadmap.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "company": {
+              "type": "string",
+              "enum": [
+                "TCS",
+                "Infosys",
+                "Wipro",
+                "Accenture",
+                "Deloitte"
+              ],
+              "description": "Recruiting company."
+            }
+          },
+          "required": [
+            "company"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
